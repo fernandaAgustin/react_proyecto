@@ -14,7 +14,7 @@ ChartJS.register(
     Legend
 );
 
-function TemperaturaList() {
+function TemperaturaTable() {
     const [data, setData] = useState([]);
     const [chartData, setChartData] = useState({
         labels: [],
@@ -49,7 +49,7 @@ function TemperaturaList() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/temUsuario');
+            const response = await fetch('http://localhost:3000/api/temSistema');
             if (!response.ok) {
                 throw new Error('No se pudo obtener los datos de la API');
             }
@@ -225,4 +225,4 @@ function TemperaturaList() {
     );
 }
 
-export default TemperaturaList;
+export default TemperaturaTable;

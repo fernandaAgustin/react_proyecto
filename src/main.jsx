@@ -5,7 +5,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage"; 
 import PerfilPage from "./pages/PerfilPage";
 import ResetPassword from "./components/ResetPassword";
-import UsuarioPage from "./pages/UsuarioPage";
+import ListaUsuario from "./components/ListaUsuario";
+//import UsuarioPage from "./pages/UsuarioPage";
 import EditPage from "./pages/EditPage";
 import NusuPage from "./pages/NusuPage";
 import SlistPage from "./pages/SlistPage";
@@ -26,6 +27,8 @@ import GraficaSistema from "./components/GraficaSistema";
 import AguaList from "./components/AguaList";
 import LuzList from "./components/LuzList";
 import HumedadList from "./components/HumedadList";
+import UsuarioList from "./components/UsuarioList";
+import TemperaturaTable from "./components/TemperaturaTable";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -35,7 +38,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/perfil" element={<PerfilPage />} />
       <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/usuarios" element={<UsuarioPage />} />
+      <Route path="/usuarios" element={<ListaUsuario />} />
+      <Route path="/usuarios" element={<ListaUsuario />} />
       <Route path="/editUsuarios/:id" element={<EditPage />} />
       <Route path="/nuevoU" element={<NusuPage />} />
       <Route path="/sensores" element={<SlistPage />} />
@@ -55,7 +59,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/luz" element={<LuzList />} />
       <Route path="/humedad" element={<HumedadList />} />
       <Route path="/graficaU" element={<GraficaSistema />} />
-
+      <Route path="/tablatem" element={<TemperaturaTable />} />
 
 
     </Routes>

@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container, Grid, Typography, Box } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material"; // Importamos el ícono de flecha
 import backgroundImage from "../img/ejemp.jpg";
-
 
 const FormularioLogin = () => {
     const navigate = useNavigate();
@@ -17,6 +16,39 @@ const FormularioLogin = () => {
     const [showCodeInput, setShowCodeInput] = useState(false);
     const [codeError, setCodeError] = useState("");
     const [isVerifying, setIsVerifying] = useState(false);
+    const [failedAttempts, setFailedAttempts] = useState(0);
+    const [blockTime, setBlockTime] = useState(null);
+
+    useEffect(() => {
+        const lastBlockTime = localStorage.getItem("blockTime");
+        if (lastBlockTime) {
+            const blockDuration = Date.now() - parseInt(lastBlockTime);
+            if (blockDuration < 180000) {
+                setIsBlocked(true);
+                setBlockTime(180000 - blockDuration); // Calculate remaining block time
+            } else {
+                localStorage.removeItem("blockTime");
+                setIsBlocked(false);
+                setFailedAttempts(0);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (blockTime !== null && blockTime > 0) {
+            const timer = setInterval(() => {
+                setBlockTime((prevTime) => {
+                    if (prevTime <= 0) {
+                        setIsBlocked(false);
+                        clearInterval(timer);
+                        return 0;
+                    }
+                    return prevTime - 1000;
+                });
+            }, 1000);
+            return () => clearInterval(timer);
+        }
+    }, [blockTime]);
 
     const handleChange = (e) => {
         if (showReset) {
@@ -32,12 +64,27 @@ const FormularioLogin = () => {
             setError("Todos los campos son obligatorios.");
             return;
         }
+
+        if (isBlocked) {
+            setError("Has alcanzado el número máximo de intentos. Intenta nuevamente en 3 minutos.");
+            return;
+        }
+
         try {
             const response = await axios.post("http://localhost:3000/api/login", formData);
             if (response.data.success) {
                 localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+                setFailedAttempts(0); // Reset failed attempts on successful login
                 navigate("/perfil");
             } else {
+                setFailedAttempts((prevAttempts) => {
+                    const newAttempts = prevAttempts + 1;
+                    if (newAttempts >= 3) {
+                        setIsBlocked(true);
+                        localStorage.setItem("blockTime", Date.now().toString());
+                    }
+                    return newAttempts;
+                });
                 setError("Correo o contraseña incorrectos.");
             }
         } catch (error) {

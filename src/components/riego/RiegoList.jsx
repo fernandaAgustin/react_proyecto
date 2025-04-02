@@ -2,106 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import UploadExcel from './UploadExcel';
-import { AppBar, Drawer, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Avatar, Typography, Toolbar, Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Pagination, Button, TextField, Paper } from '@mui/material';
+import { AppBar, Box, Button, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Pagination, Paper, IconButton } from '@mui/material';
 import { People, Speed, Opacity, ToggleOn, BarChart, Logout, Edit, Delete, Add, CloudUpload, Home } from '@mui/icons-material';
-import RiegoGrafico from './RiegoGrafico';
-import { saveAs } from 'file-saver'; // Librería para descargar el archivo
 import * as XLSX from 'xlsx'; // Importa XLSX para crear el archivo Excel
 
-
-const drawerWidth = 240;
-
-const Sidebar = ({ usuario, handleLogout }) => (
-    <Drawer
-        variant="permanent"
-        sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed",
-                backgroundRepeat: "no-repeat",
-                color: 'white'
-            },
-        }}
-    >
-        <Toolbar />
-        <Box sx={{}}>
-            <List>
-                <ListItem sx={{ justifyContent: 'center' }}>
-                    <Avatar src={`http://localhost:3000/uploads/${usuario.foto}`} alt={usuario.nombre} sx={{ width: 80, height: 80 }} />
-                </ListItem>
-                <ListItem sx={{ justifyContent: 'center' }}>
-                    <Typography sx={{ color: 'white', fontWeight: 'bold', }}>{usuario.nombre}</Typography>
-                </ListItem>
-                <ListItemButton component="a" href="/perfil" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Home sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Home" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/usuarios" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><People sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Usuarios" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/sensores" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Speed sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Sensores" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/riego" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Opacity sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Riego" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/valvula" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><ToggleOn sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Válvulas" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton onClick={handleLogout} sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Logout sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Cerrar sesión" sx={{ color: 'white' }} />
-                </ListItemButton>
-            </List>
-        </Box>
-    </Drawer>
-);
 const RiegoList = () => {
     const [usuario, setUsuario] = useState(null);
     const [riegos, setRiegos] = useState([]);
@@ -193,7 +97,6 @@ const RiegoList = () => {
         // Generar el archivo Excel y descargarlo
         XLSX.writeFile(wb, 'Lista_de_Riegos.xlsx');
     };
-    
 
     if (!usuario) return <p>Cargando...</p>;
 
@@ -206,14 +109,30 @@ const RiegoList = () => {
                 color: 'black'
             }}
         >
-            <AppBar position="fixed" sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px}`, backgroundColor: '#333' }}>
-                <Toolbar sx={{ color: '#fff', backgroundColor: '#042425' }}>
-                    <Typography variant="h6" noWrap component="div" sx={{ color: '#fff', backgroundColor: '#042425' }}>
-                        Administrar Riego
-                    </Typography>
-                </Toolbar>
+            <AppBar position="fixed" sx={{ width: '100%', backgroundColor: '#333' }}>
+                <Typography variant="h6" sx={{ color: '#fff', padding: '10px' }}>
+                    Administrar Riego
+                    <Button
+                    component={Link}
+                    to="/perfil"
+                    sx={{
+                        mt: 1, // Added margin-top for better spacing
+                        backgroundColor: 'black',
+                        color: '#fff',
+                        padding: '3px 6px', // Increased padding for better button size
+                        borderRadius: '8px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        '&:hover': {
+                            backgroundColor: 'red',
+                        },
+                    }}
+                > Dashboard
+                </Button>
+                </Typography>
             </AppBar>
-            <Sidebar usuario={usuario} handleLogout={handleLogout} />
+
             <Box
                 component="main"
                 sx={{
@@ -279,24 +198,23 @@ const RiegoList = () => {
                 </Box>
 
                 <Button
-    variant="contained"
-    onClick={exportarExcel}
-    sx={{
-        mt: 2,
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: '#2C3E50',
-        color: '#fff',
-        padding: '12px 24px',
-        borderRadius: '8px',
-        '&:hover': {
-            backgroundColor: '#34495E',
-        },
-    }}
->
-    Exportar a Excel
-</Button>
-
+                    variant="contained"
+                    onClick={exportarExcel}
+                    sx={{
+                        mt: 2,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        backgroundColor: '#2C3E50',
+                        color: '#fff',
+                        padding: '12px 24px',
+                        borderRadius: '8px',
+                        '&:hover': {
+                            backgroundColor: '#34495E',
+                        },
+                    }}
+                >
+                    Exportar a Excel
+                </Button>
 
                 {/* Botón de Subir Excel */}
                 <UploadExcel
@@ -331,7 +249,7 @@ const RiegoList = () => {
                         overflowY: 'auto',
                     }}
                 >
-                    <Table sx={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: 'black', borderCollapse: 'collapse'  }}>
+                    <Table sx={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: 'black', borderCollapse: 'collapse' }}>
                         <TableHead>
                             <TableRow>
                                 <TableCell sx={{ color: '#fff' }}>ID</TableCell>
@@ -411,7 +329,6 @@ const RiegoList = () => {
                 >
                     Nuevo Riego
                 </Button>
-                <RiegoGrafico riegos={riegosFiltrados} />
             </Box>
         </Box>
     );

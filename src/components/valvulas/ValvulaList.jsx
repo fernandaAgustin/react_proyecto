@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Drawer, AppBar, Toolbar, Typography, IconButton, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination, TextField } from "@mui/material";
-import { People, Speed, Opacity, ToggleOn, BarChart, Logout, Add, Edit, Delete, CloudUpload, Home, CloudDownload  } from "@mui/icons-material";
+import { Box, AppBar, Toolbar, Typography, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination, TextField, Button } from "@mui/material";
+import { Speed, Opacity, ToggleOn, BarChart, Logout, Add, Edit, Delete, CloudUpload, Home, CloudDownload } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import UploadExcel from "./UploadExcel";
 import ValvulaGraficas from "./ValvulaGraficas";
@@ -9,97 +9,6 @@ import { saveAs } from 'file-saver'; // Librería para descargar el archivo
 import * as XLSX from 'xlsx'; // Importa XLSX para crear el archivo Excel
 
 const drawerWidth = 240;
-
-const Sidebar = ({ usuario, handleLogout }) => (
-    <Drawer
-        variant="permanent"
-        sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed",
-                backgroundRepeat: "no-repeat",
-                color: 'white'
-            },
-        }}
-    >
-        <Box sx={{}}>
-            <List>
-                <ListItem sx={{ justifyContent: 'center' }}>
-                    <Avatar src={`http://localhost:3000/uploads/${usuario.foto}`} alt={usuario.nombre} sx={{ width: 80, height: 80 }} />
-                </ListItem>
-                <ListItem sx={{ justifyContent: 'center' }}>
-                    <Typography sx={{ color: 'white', fontWeight: 'bold', }}>{usuario.nombre}</Typography>
-                </ListItem>
-                <ListItemButton component="a" href="/perfil" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Home sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Home" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/usuarios" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><People sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Usuarios" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/sensores" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Speed sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Sensores" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/riego" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Opacity sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Riego" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton component="a" href="/valvula" sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><ToggleOn sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Administrar Válvulas" sx={{ color: 'white' }} />
-                </ListItemButton>
-                <ListItemButton onClick={handleLogout} sx={{
-                    '&:hover': {
-                        transform: 'scale(1.15)',
-                        transition: 'transform 0.3s ease-in-out',
-                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
-                    }
-                }}>
-                    <ListItemIcon><Logout sx={{ color: 'white' }} /></ListItemIcon>
-                    <ListItemText primary="Cerrar sesión" sx={{ color: 'white' }} />
-                </ListItemButton>
-            </List>
-        </Box>
-    </Drawer>
-);
 
 const ValvulaList = () => {
     const [valvulas, setValvulas] = useState([]);
@@ -166,6 +75,7 @@ const ValvulaList = () => {
         localStorage.removeItem('usuario');
         navigate('/');
     };
+
     const handleExportToExcel = () => {
         const dataToExport = filteredValvulas.map(valvula => ({
             'ID': valvula.id,
@@ -182,7 +92,6 @@ const ValvulaList = () => {
         saveAs(blob, 'valvulas.xlsx');
     };
 
-
     if (!usuario) return <p>Cargando...</p>;
 
     return (
@@ -194,14 +103,30 @@ const ValvulaList = () => {
                 color: 'black'
             }}
         >
-            <AppBar position="fixed" sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px}`, backgroundColor: '#333' }}>
-                <Toolbar sx={{ color: '#fff', backgroundColor: '#042425' }}>
-                    <Typography variant="h6" noWrap component="div" sx={{ color: '#fff', backgroundColor: '#042425' }}>
-                        Administrar Valvulas
-                    </Typography>
-                </Toolbar>
+            <AppBar position="fixed" sx={{ width: `100%`, backgroundColor: '#333' }}>
+                <Typography variant="h6" noWrap component="div" sx={{ color: '#fff', backgroundColor: '#042425' }}>
+                    Administrar Valvulas
+                    <Button
+                        component={Link}
+                        to="/perfil"
+                        sx={{
+                            mt: 1, // Added margin-top for better spacing
+                            backgroundColor: 'black',
+                            color: '#fff',
+                            padding: '3px 6px', // Increased padding for better button size
+                            borderRadius: '8px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            '&:hover': {
+                                backgroundColor: 'red',
+                            },
+                        }}
+                    > Dashboard
+                    </Button>
+                </Typography>
             </AppBar>
-            <Sidebar usuario={usuario} handleLogout={handleLogout} />
+
             <Box
                 component="main"
                 sx={{
@@ -387,7 +312,6 @@ const ValvulaList = () => {
                 >
                     Nueva Válvula
                 </Button>
-                <ValvulaGraficas valvulas={valvulas} />
             </Box>
         </Box>
     );

@@ -1,14 +1,111 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Box, AppBar, Toolbar, Typography, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination, TextField, Button } from '@mui/material';
-import { People, Speed, Opacity, ToggleOn, Logout, Add, DeleteForever, BorderColor, CloudUpload, CloudDownload } from '@mui/icons-material';
+import { Box, Drawer, AppBar, Toolbar, Typography, IconButton, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination, TextField } from '@mui/material';
+import { People, Speed, Opacity, ToggleOn, Logout, Add, DeleteForever, BorderColor, Home, ArrowBack, ArrowForward } from '@mui/icons-material';
 import UploadExcel from './UploadExcel';
+import { CloudUpload } from '@mui/icons-material';
+import { CloudDownload } from '@mui/icons-material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts'; // Importar Recharts
+import UserStats from '../components/UserStats';
 import * as XLSX from 'xlsx'; // Importa XLSX para crear el archivo Excel
 import { saveAs } from 'file-saver'; // Librería para descargar el archivo
 
-const ListaUsuario = () => {
+const drawerWidth = 240;
+
+const Sidebar = ({ usuario, handleLogout }) => (
+    <Drawer
+        variant="permanent"
+        sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+                width: drawerWidth,
+                boxSizing: 'border-box',
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed",
+                backgroundRepeat: "no-repeat",
+                color: 'white'
+            },
+        }}
+    >
+        <Toolbar />
+        <Box sx={{}}>
+            <List>
+                <ListItem sx={{ justifyContent: 'center' }}>
+                    <Avatar src={`http://localhost:3000/uploads/${usuario.foto}`} alt={usuario.nombre} sx={{ width: 80, height: 80 }} />
+                </ListItem>
+                <ListItem sx={{ justifyContent: 'center' }}>
+                    <Typography sx={{ color: 'white', fontWeight: 'bold', }}>{usuario.nombre}</Typography>
+                </ListItem>
+                <ListItemButton component="a" href="/perfil" sx={{
+                    '&:hover': {
+                        transform: 'scale(1.15)',
+                        transition: 'transform 0.3s ease-in-out',
+                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
+                    }
+                }}>
+                    <ListItemIcon><Home sx={{ color: 'white' }} /></ListItemIcon>
+                    <ListItemText primary="Home" sx={{ color: 'white' }} />
+                </ListItemButton>
+                <ListItemButton component="a" href="/usuarios" sx={{
+                    '&:hover': {
+                        transform: 'scale(1.15)',
+                        transition: 'transform 0.3s ease-in-out',
+                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
+                    }
+                }}>
+                    <ListItemIcon><People sx={{ color: 'white' }} /></ListItemIcon>
+                    <ListItemText primary="Administrar Usuarios" sx={{ color: 'white' }} />
+                </ListItemButton>
+                <ListItemButton component="a" href="/sensores" sx={{
+                    '&:hover': {
+                        transform: 'scale(1.15)',
+                        transition: 'transform 0.3s ease-in-out',
+                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
+                    }
+                }}>
+                    <ListItemIcon><Speed sx={{ color: 'white' }} /></ListItemIcon>
+                    <ListItemText primary="Administrar Sensores" sx={{ color: 'white' }} />
+                </ListItemButton>
+                <ListItemButton component="a" href="/riego" sx={{
+                    '&:hover': {
+                        transform: 'scale(1.15)',
+                        transition: 'transform 0.3s ease-in-out',
+                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
+                    }
+                }}>
+                    <ListItemIcon><Opacity sx={{ color: 'white' }} /></ListItemIcon>
+                    <ListItemText primary="Administrar Riego" sx={{ color: 'white' }} />
+                </ListItemButton>
+                <ListItemButton component="a" href="/valvula" sx={{
+                    '&:hover': {
+                        transform: 'scale(1.15)',
+                        transition: 'transform 0.3s ease-in-out',
+                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
+                    }
+                }}>
+                    <ListItemIcon><ToggleOn sx={{ color: 'white' }} /></ListItemIcon>
+                    <ListItemText primary="Administrar Válvulas" sx={{ color: 'white' }} />
+                </ListItemButton>
+                <ListItemButton onClick={handleLogout} sx={{
+                    '&:hover': {
+                        transform: 'scale(1.15)',
+                        transition: 'transform 0.3s ease-in-out',
+                        backgroundColor: 'rgba(255, 255, 255, 0.28)'
+                    }
+                }}>
+                    <ListItemIcon><Logout sx={{ color: 'white' }} /></ListItemIcon>
+                    <ListItemText primary="Cerrar sesión" sx={{ color: 'white' }} />
+                </ListItemButton>
+            </List>
+        </Box>
+    </Drawer>
+);
+
+const UsuarioList = () => {
     const navigate = useNavigate();
     const [usuario, setUsuario] = useState(null);
     const [usuarios, setUsuarios] = useState([]);
@@ -32,7 +129,7 @@ const ListaUsuario = () => {
     }, [navigate]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/usuarios/")
+        axios.get("http://localhost:3000/api/usuarios/") 
             .then(response => setUsuarios(response.data))
             .catch(error => console.error("Error al obtener usuarios:", error));
     }, []);
@@ -124,30 +221,14 @@ const ListaUsuario = () => {
                 color: 'black'
             }}
         >
-            <AppBar position="fixed" sx={{ width: `100%`, backgroundColor: '#333' }}>
-                <Typography variant="h6" noWrap component="div" sx={{ color: '#fff', backgroundColor: '#042425' }}>
-                    Administrar Usuarios
-                    <Button
-                        component={Link}
-                        to="/perfil"
-                        sx={{
-                            mt: 1, // Added margin-top for better spacing
-                            backgroundColor: 'black',
-                            color: '#fff',
-                            padding: '3px 6px', // Increased padding for better button size
-                            borderRadius: '8px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            '&:hover': {
-                                backgroundColor: 'red',
-                            },
-                        }}
-                    > Dashboard
-                    </Button>
-                </Typography>
+            <AppBar position="fixed" sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px}`, backgroundColor: '#333' }}>
+                <Toolbar sx={{ color: '#fff', backgroundColor: '#042425' }}>
+                    <Typography variant="h6" noWrap component="div" sx={{ color: '#fff', backgroundColor: '#042425' }}>
+                        Administrar Usuarios
+                    </Typography>
+                </Toolbar>
             </AppBar>
-
+            <Sidebar usuario={usuario} handleLogout={handleLogout} />
             <Box
                 component="main"
                 sx={{
@@ -233,9 +314,8 @@ const ListaUsuario = () => {
                 >
                     <CloudUpload sx={{ mr: 1 }} /> Subir Excel
                 </UploadExcel>
-
-                {/* Agregar las gráficas */}
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4, mt: 4 }}>
+ {/* Agregar las gráficas */}
+ <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4, mt: 4 }}>
                     {/* Gráfica de roles */}
                     <Box sx={{ width: '45%' }}>
                         <Typography variant="h6" sx={{ textAlign: 'center' }}>Distribución de Rol</Typography>
@@ -268,7 +348,6 @@ const ListaUsuario = () => {
                         </ResponsiveContainer>
                     </Box>
                 </Box>
-
                 {/* Tabla sin scroll */}
                 <TableContainer
                     component={Paper}
@@ -280,7 +359,7 @@ const ListaUsuario = () => {
                         overflowY: 'auto',
                     }}
                 >
-                    <Table sx={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: 'black', borderCollapse: 'collapse' }}>
+                    <Table sx={{ backgroundColor: "rgba(0, 0, 0, 0.1)", color: 'black', borderCollapse: 'collapse'  }}>
                         <TableHead>
                             <TableRow sx={{ backgroundColor: 'transparent' }}>
                                 <TableCell sx={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#04242' }}>ID</TableCell>
@@ -289,7 +368,7 @@ const ListaUsuario = () => {
                                 <TableCell sx={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#04242' }}>Rol</TableCell>
                                 <TableCell sx={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#04242' }}>Fecha de Nacimiento</TableCell>
                                 <TableCell sx={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#04242' }}>Sexo</TableCell>
-                                <TableCell sx={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#04242' }}>Acciones</TableCell>
+                                <TableCell sx={{ color: '#fff', fontWeight: 'bold', backgroundColor: '#04242t' }}>Acciones</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -317,7 +396,7 @@ const ListaUsuario = () => {
                     </Table>
                 </TableContainer>
 
-                {/* Paginación */}
+                {/* Paginación con el componente Pagination */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     <Typography variant="body1" sx={{ marginRight: 2 }}>
                         Página {currentPage} de {totalPages}
@@ -330,7 +409,6 @@ const ListaUsuario = () => {
                     />
                 </Box>
 
-                {/* Botones */}
                 <Button
                     variant="contained"
                     startIcon={<Add />}
@@ -353,17 +431,18 @@ const ListaUsuario = () => {
                     Nuevo Usuario
                 </Button>
                 <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<CloudDownload />}
-                    onClick={handleExportToExcel}
-                    sx={{ mb: 2 }}
-                >
-                    Exportar a Excel
-                </Button>
+                variant="contained"
+                color="primary"
+                startIcon={<CloudDownload />}
+                onClick={handleExportToExcel}
+                sx={{ mb: 2 }}
+            >
+                Exportar a Excel
+            </Button>
+                <UserStats usuarios={usuarios} />
             </Box>
         </Box>
     );
 };
 
-export default ListaUsuario;
+export default UsuarioList;
