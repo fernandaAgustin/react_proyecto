@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { Box, Typography } from "@mui/material";
 
-const COLORS = ["#14B8A6", "#8DD3C7", "#6A5ACD", "#9400D3", "#FF00FF"];
+// Colores distintos para cada gráfico
+const COLORS_ESTADO = ["#14B8A6", "#8DD3C7", "#6A5ACD", "#9400D3", "#FF00FF"];
+const COLORS_UBICACION = ["#FF6347", "#FFD700", "#32CD32", "#8A2BE2", "#FF4500"];
 
 const GraficoValvulas = ({ valvulas }) => {
     const [dataEstado, setDataEstado] = useState([]);
@@ -19,7 +21,7 @@ const GraficoValvulas = ({ valvulas }) => {
             setDataEstado(Object.keys(estados).map((key, index) => ({
                 name: key,
                 value: estados[key],
-                color: COLORS[index % COLORS.length]
+                color: COLORS_ESTADO[index % COLORS_ESTADO.length]  // Colores para el gráfico de estado
             })));
 
             // Procesar datos por ubicación
@@ -31,7 +33,7 @@ const GraficoValvulas = ({ valvulas }) => {
             setDataUbicacion(Object.keys(ubicaciones).map((key, index) => ({
                 name: key,
                 value: ubicaciones[key],
-                color: COLORS[index % COLORS.length]
+                color: COLORS_UBICACION[index % COLORS_UBICACION.length]  // Colores para el gráfico de ubicación
             })));
         }
     }, [valvulas]);
@@ -45,19 +47,18 @@ const GraficoValvulas = ({ valvulas }) => {
             alignItems="center"
             justifyContent="center"
             minHeight="100vh"
+            color="white"
             sx={{
-                backgroundColor: "rgba(221, 234, 230, 0.44)",  // Color verde
-                color: '#fff',
+                color: 'white',
                 padding: '12px 24px',
                 borderRadius: '50px',
                 '&:hover': {
                     backgroundColor: "rgba(221, 234, 230, 0.44)",  // Color al pasar el mouse
                 },
             }}
-            color="black"
         >
             {/* Gráfico de Estado */}
-            <Typography variant="h6" sx={{color:"black"}} gutterBottom>Gráfico de Válvulas por Estado</Typography>
+            <Typography variant="h6" sx={{color:"white"}} gutterBottom>Válvulas por Estado</Typography>
             <PieChart width={300} height={300}>
                 <Pie
                     data={dataEstado}
@@ -80,7 +81,7 @@ const GraficoValvulas = ({ valvulas }) => {
             </PieChart>
 
             {/* Gráfico de Ubicación */}
-            <Typography variant="h6" sx={{color:"black"}} gutterBottom>Gráfico de Válvulas por Ubicación</Typography>
+            <Typography variant="h6" sx={{color:"white"}} gutterBottom>Válvulas por Ubicación</Typography>
             <PieChart width={300} height={300}>
                 <Pie
                     data={dataUbicacion}

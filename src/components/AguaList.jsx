@@ -1,38 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Pagination } from 'react-bootstrap'; // Paginación de Bootstrap
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-);
-
 function AguaList() {
     const [data, setData] = useState([]);
-    const [chartData, setChartData] = useState({
-        labels: [], // X-Axis labels
-        datasets: [
-            {
-                label: 'Agua Detectada',
-                data: [], // Datos de agua detectada
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-            },
-            {
-                label: 'Posición Servo',
-                data: [], // Datos de la posición del servo
-                borderColor: 'rgba(153, 102, 255, 1)',
-                fill: false,
-            }
-        ]
-    });
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(15); // Número de elementos por página
     const [notification, setNotification] = useState(''); // Notificación de alerta
@@ -53,35 +24,19 @@ function AguaList() {
             const response = await fetch('http://localhost:3000/api/agUsuario');
             const newData = await response.json();
             setData(newData); // Guardar los datos recibidos
-            updateChartData(newData); // Actualizar los datos para los gráficos
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
     };
 
-    // Actualiza los datos para el gráfico
-    const updateChartData = (data) => {
-        const labels = data.map((row, index) => `Entrada ${index + 1}`);
-        const aguaData = data.map(row => row.agua_detectada);
-        const servoData = data.map(row => row.posicion_servo);
+    // Función para convertir los valores de agua a su representación
+    const getAguaLabel = (agua) => agua === 1 ? 'HAY AGUA' : 'NO HAY AGUA';
 
-        setChartData({
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Agua Detectada',
-                    data: aguaData,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    fill: false,
-                },
-                {
-                    label: 'Posición Servo',
-                    data: servoData,
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    fill: false,
-                }
-            ]
-        });
+    // Función para convertir los valores de posición del servo a su representación
+    const getServoLabel = (posicion) => {
+        if (posicion === 0) return 'CERRADO';
+        if (posicion === 90) return 'ABIERTO';
+        return 'Posición desconocida';
     };
 
     // Función para cambiar la página de la tabla
@@ -97,38 +52,25 @@ function AguaList() {
     // Paginación de la tabla
     const pageCount = Math.ceil(data.length / itemsPerPage);
 
+    // Obtener los últimos valores de agua y posición servo
+    const lastRow = data[data.length - 1];
+
     return (
         <div className="App">
-            <h1 className="text-center mb-4">Gráficas de Agua y Servo</h1>
+            <h1 className="text-center mb-4">Estado de Agua y Servo</h1>
 
             <div className="row mb-4">
                 <div className="col-md-6">
-                    <h3>Gráfico Agua Detectada</h3>
-                    <Line data={{
-                        labels: chartData.labels,
-                        datasets: [
-                            {
-                                label: 'Agua Detectada',
-                                data: chartData.datasets[0].data,
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                fill: false,
-                            }
-                        ]
-                    }} />
+                    <h3>Último Estado de Agua Detectada</h3>
+                    <div className="alert alert-info text-center">
+                        {lastRow ? getAguaLabel(lastRow.agua_detectada) : 'Cargando...'}
+                    </div>
                 </div>
                 <div className="col-md-6">
-                    <h3>Gráfico Posición Servo</h3>
-                    <Line data={{
-                        labels: chartData.labels,
-                        datasets: [
-                            {
-                                label: 'Posición Servo',
-                                data: chartData.datasets[1].data,
-                                borderColor: 'rgba(153, 102, 255, 1)',
-                                fill: false,
-                            }
-                        ]
-                    }} />
+                    <h3>Último Estado de Posición del Servo</h3>
+                    <div className="alert alert-info text-center">
+                        {lastRow ? getServoLabel(lastRow.posicion_servo) : 'Cargando...'}
+                    </div>
                 </div>
             </div>
 
@@ -147,8 +89,8 @@ function AguaList() {
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
                                     <td>{row.id}</td>
-                                    <td>{row.agua_detectada}</td>
-                                    <td>{row.posicion_servo}</td>
+                                    <td>{getAguaLabel(row.agua_detectada)}</td>
+                                    <td>{getServoLabel(row.posicion_servo)}</td>
                                 </tr>
                             ))}
                         </tbody>

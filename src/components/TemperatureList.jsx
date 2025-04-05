@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Pagination } from 'react-bootstrap';
+import { Pagination } from 'react-bootstrap'; // Paginación de Bootstrap
+import { FaFan } from 'react-icons/fa'; // Ícono de ventilador de react-icons
+import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(
     CategoryScale,
@@ -14,103 +16,92 @@ ChartJS.register(
     Legend
 );
 
-function TemperaturaList() {
+function TemperatureList() {
     const [data, setData] = useState([]);
     const [chartData, setChartData] = useState({
-        labels: [],
+        labels: [], 
         datasets: [
             {
                 label: 'Temperatura 1',
                 data: [],
-                borderColor: 'rgba(75, 192, 192, 1)',
+                borderColor: 'rgba(255, 99, 132, 1)', // Línea roja
                 fill: false,
+                borderWidth: 4,
             },
             {
                 label: 'Temperatura 2',
                 data: [],
-                borderColor: 'rgba(153, 102, 255, 1)',
+                borderColor: 'rgba(54, 162, 235, 1)', // Línea azul
                 fill: false,
+                borderWidth: 4,
             }
         ]
     });
+    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(15);
-    const [fanStatus, setFanStatus] = useState('Apagado');
-    const [notification, setNotification] = useState('');
+    const [fanStatus, setFanStatus] = useState({
+        temp1: 'apagado',
+        temp2: 'apagado',
+    });
+    const [showAlertTemp1, setShowAlertTemp1] = useState(false); 
+    const [showAlertTemp2, setShowAlertTemp2] = useState(false); 
 
     useEffect(() => {
         fetchData();
         const interval = setInterval(() => {
-            fetchData(); // Actualizar cada 5 segundos
+            fetchData();
         }, 5000);
-
         return () => clearInterval(interval);
     }, []);
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/temUsuario');
-            if (!response.ok) {
-                throw new Error('No se pudo obtener los datos de la API');
-            }
+            const response = await fetch('http://localhost:3000/api/temusuario');
             const newData = await response.json();
-            console.log(newData); // Verifica los datos recibidos
             setData(newData);
             updateChartData(newData);
             checkFanStatus(newData);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
-            setNotification('Error al obtener los datos. Intente nuevamente.');
         }
     };
 
     const updateChartData = (data) => {
-        if (!data || data.length === 0) {
-            console.error('No se recibieron datos válidos');
-            return;
-        }
-
         const labels = data.map((row, index) => `Entrada ${index + 1}`);
-        const temp1Data = data.map(row => row.nivel_temperatura1 || 0);
-        const temp2Data = data.map(row => row.nivel_temperatura2 || 0);
-
+        const temp1Data = data.map(row => row.nivel_temperatura1);
+        const temp2Data = data.map(row => row.nivel_temperatura2);
         setChartData({
             labels: labels,
             datasets: [
                 {
                     label: 'Temperatura 1',
                     data: temp1Data,
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderColor: 'rgba(255, 99, 132, 1)', // Línea roja
                     fill: false,
+                    borderWidth: 4,
                 },
                 {
                     label: 'Temperatura 2',
                     data: temp2Data,
-                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderColor: 'rgba(54, 162, 235, 1)', // Línea azul
                     fill: false,
+                    borderWidth: 4,
                 }
             ]
         });
     };
 
     const checkFanStatus = (data) => {
-        const temp1 = data[data.length - 1]?.nivel_temperatura1;
-        const temp2 = data[data.length - 1]?.nivel_temperatura2;
+        const lastData = data[data.length - 1];
+        const newFanStatus = {
+            temp1: lastData.estado_ventilador1 === 'encendido' ? 'encendido' : 'apagado',
+            temp2: lastData.estado_ventilador2 === 'encendido' ? 'encendido' : 'apagado',
+        };
+        setFanStatus(newFanStatus);
 
-        // Condición para encender el ventilador
-        if (temp1 > 30 || temp2 > 30) {
-            if (fanStatus !== 'Encendido') {
-                setFanStatus('Encendido');
-                setNotification('¡Alerta! El ventilador se ha encendido debido a la temperatura alta.');
-                alert('¡Alerta! El ventilador se ha encendido debido a la temperatura alta.');
-            }
-        } else {
-            if (fanStatus !== 'Apagado') {
-                setFanStatus('Apagado');
-                setNotification('El ventilador está apagado, temperatura dentro de rango.');
-                alert('El ventilador está apagado, temperatura dentro de rango.');
-            }
-        }
+        setShowAlertTemp1(newFanStatus.temp1 === 'encendido');
+        setShowAlertTemp2(newFanStatus.temp2 === 'encendido');
     };
 
     const handlePageChange = (pageNumber) => {
@@ -120,82 +111,66 @@ function TemperaturaList() {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
     const pageCount = Math.ceil(data.length / itemsPerPage);
 
     return (
         <div className="App">
-            <h1 className="text-center mb-4">Gráficas de Temperatura y Ventilador</h1>
-
+            <h1 className="text-center mb-4">Temperatura</h1>
             <div className="row mb-4">
-                <div className="col-md-6">
-                    <h3>Gráfico Temperatura 1</h3>
-                    <Line data={{
-                        labels: chartData.labels,
-                        datasets: [
-                            {
-                                label: 'Temperatura 1',
-                                data: chartData.datasets[0].data,
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                fill: false,
-                            }
-                        ]
-                    }} />
+            <div className="d-flex justify-content-between mb-4" style={{ marginBottom: '35px' }}>
+                <button className="btn btn-outline-secondary" onClick={() => navigate('/perfil')}>
+                    <i className="fas fa-arrow-left me-2"></i> Regreso
+                </button>
+                <button className="btn btn-outline-info" onClick={() => navigate('/tablatem')}>
+                    <i className="fas fa-history me-2"></i> Historial
+                </button>
                 </div>
                 <div className="col-md-6">
-                    <h3>Gráfico Temperatura 2</h3>
+                    <h3>Datos Estadísticos</h3>
                     <Line data={{
                         labels: chartData.labels,
-                        datasets: [
-                            {
-                                label: 'Temperatura 2',
-                                data: chartData.datasets[1].data,
-                                borderColor: 'rgba(153, 102, 255, 1)',
-                                fill: false,
-                            }
-                        ]
+                        datasets: chartData.datasets
                     }} />
+                </div>
+                <div className="col-md-5">
+                    <div className={`ventilador-status-box ${fanStatus.temp1 === 'encendido' ? 'bg-danger' : 'bg-secondary'} p-3 rounded d-flex align-items-center justify-content-center shadow-lg`} style={{ transition: 'background-color 0.5s, transform 0.3s' }}>
+                        <FaFan size={25} color="white" />
+                        <span className="ml-3 text-white">{`VENTILACIÓN A: ${fanStatus.temp1}`}</span>
+                    </div>
+                    <div className={`ventilador-status-box ${fanStatus.temp2 === 'encendido' ? 'bg-danger' : 'bg-secondary'} p-3 rounded d-flex align-items-center justify-content-center shadow-lg mt-3`} style={{ transition: 'background-color 0.5s, transform 0.3s' }}>
+                        <FaFan size={25} color="white" />
+                        <span className="ml-3 text-white">{`VENTILACIÓN B: ${fanStatus.temp2}`}</span>
+                    </div>
                 </div>
             </div>
-
-            <div className="row">
-                <div className="col-md-6">
-                    <h2>Datos Zona A</h2>
-                    <table className="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Temperatura 1</th>
-                                <th>Estado Ventilador 1</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentItems.map((row, index) => (
-                                <tr key={index}>
-                                    <td>{row.id}</td>
-                                    <td>{row.nivel_temperatura1}</td>
-                                    <td>{row.estado_ventilador1}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+            {showAlertTemp1 && (
+                <div className="alert alert-danger mt-3" style={{ transition: 'opacity 0.5s' }}>
+                    ¡VENTILACIÓN ZONA 'A' ENCENDIDO!
                 </div>
-
-                <div className="col-md-6">
-                    <h2>Datos Zona B</h2>
-                    <table className="table table-bordered table-striped">
+            )}
+            {showAlertTemp2 && (
+                <div className="alert alert-danger mt-3" style={{ transition: 'opacity 0.5s' }}>
+                    ¡VENTILACIÓN ZONA 'B' ENCENDIDO!
+                </div>
+            )}
+            <div className="row">
+                <div className="col-md-12">
+                    <h3 className="text-center">Datos</h3>
+                    <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th>Temperatura 1</th>
                                 <th>Temperatura 2</th>
-                                <th>Estado Ventilador 2</th>
+                                <th>Estado del Ventilador 1</th>
+                                <th>Estado del Ventilador 2</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.id}</td>
+                                    <td>{row.nivel_temperatura1}</td>
                                     <td>{row.nivel_temperatura2}</td>
+                                    <td>{row.estado_ventilador1}</td>
                                     <td>{row.estado_ventilador2}</td>
                                 </tr>
                             ))}
@@ -203,9 +178,6 @@ function TemperaturaList() {
                     </table>
                 </div>
             </div>
-
-            {notification && <div className="alert alert-info">{notification}</div>}
-
             <div className="pagination-container d-flex justify-content-center my-4">
                 <Pagination>
                     <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />
@@ -225,4 +197,4 @@ function TemperaturaList() {
     );
 }
 
-export default TemperaturaList;
+export default TemperatureList;

@@ -29,6 +29,9 @@ import LuzList from "./components/LuzList";
 import HumedadList from "./components/HumedadList";
 import UsuarioList from "./components/UsuarioList";
 import TemperaturaTable from "./components/TemperaturaTable";
+import LuzTabla from "./components/LuzTabla";
+import SistemaHumedad from "./components/SistemaHumedad";
+import AguaSistema from "./components/AguaSistema";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -56,10 +59,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/asis" element={<AdminSistema />} />
       <Route path="/temperatura" element={<TemperatureList />} />
       <Route path="/agua" element={<AguaList />} />
+      <Route path="/aguasis" element={<AguaSistema />} />
       <Route path="/luz" element={<LuzList />} />
       <Route path="/humedad" element={<HumedadList />} />
       <Route path="/graficaU" element={<GraficaSistema />} />
       <Route path="/tablatem" element={<TemperaturaTable />} />
+      <Route path="/tablaluz" element={<LuzTabla />} />
+      <Route path="/shumedad" element={<SistemaHumedad />} />
+
 
 
     </Routes>

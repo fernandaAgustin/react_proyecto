@@ -3,6 +3,9 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Pagination } from 'react-bootstrap'; // Paginación de Bootstrap
+import { FaLightbulb } from 'react-icons/fa'; // Icono de luz de react-icons
+import { useNavigate } from 'react-router-dom';
+
 
 ChartJS.register(
     CategoryScale,
@@ -21,21 +24,18 @@ function LuzList() {
         datasets: [
             {
                 label: 'Luz',
-                data: [], // Datos de luz
-                borderColor: 'rgba(75, 192, 192, 1)',
+                data: [], 
+                borderColor: 'rgba(255, 204, 0, 1)', 
                 fill: false,
-            },
-            {
-                label: 'Estado LED',
-                data: [], // Datos del estado del LED
-                borderColor: 'rgba(153, 102, 255, 1)',
-                fill: false,
+                borderWidth: 4, 
             }
         ]
     });
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(15); // Número de elementos por página
-    const [notification, setNotification] = useState(''); // Notificación de alerta
+    const [itemsPerPage] = useState(15); 
+    const [notification, setNotification] = useState(''); 
+    const [ledStatus, setLedStatus] = useState(''); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Hacer la solicitud GET para obtener los datos de la base de datos
@@ -54,6 +54,7 @@ function LuzList() {
             const newData = await response.json();
             setData(newData); // Guardar los datos recibidos
             updateChartData(newData); // Actualizar los datos para los gráficos
+            checkLedStatus(newData); // Comprobar el estado del LED
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
@@ -63,7 +64,6 @@ function LuzList() {
     const updateChartData = (data) => {
         const labels = data.map((row, index) => `Entrada ${index + 1}`);
         const luzData = data.map(row => row.luz);
-        const ledData = data.map(row => row.estado_led);
 
         setChartData({
             labels: labels,
@@ -71,17 +71,26 @@ function LuzList() {
                 {
                     label: 'Luz',
                     data: luzData,
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderColor: 'rgba(255, 204, 0, 1)', // Línea amarilla
                     fill: false,
-                },
-                {
-                    label: 'Estado LED',
-                    data: ledData,
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    fill: false,
+                    borderWidth: 3,
                 }
             ]
         });
+    };
+
+    // Verificar el estado del LED y mostrar alerta si está encendido
+    const checkLedStatus = (data) => {
+        const ledData = data.map(row => row.estado_led);
+        const ledOn = ledData.some(status => status === 'Encendido');
+        
+        if (ledOn) {
+            setLedStatus('encendido');
+            setNotification('¡Alerta! El LED está Encendido.');
+        } else {
+            setLedStatus('apagado');
+            setNotification('');
+        }
     };
 
     // Función para cambiar la página de la tabla
@@ -99,46 +108,56 @@ function LuzList() {
 
     return (
         <div className="App">
-            <h1 className="text-center mb-4">Gráficas de Luz y LED</h1>
-
+            <h1 className="text-center mb-4">Gráficas de Luz</h1>
+            <div className="d-flex justify-content-between mb-4" style={{ marginBottom: '35px' }}>
+                <button className="btn btn-outline-secondary" onClick={() => navigate('/perfil')}>
+                    <i className="fas fa-arrow-left me-2"></i> Regreso
+                </button>
+                <button className="btn btn-outline-info" onClick={() => navigate('/tablaluz')}>
+                    <i className="fas fa-history me-2"></i> Historial
+                </button>
+                </div>
             <div className="row mb-4">
                 <div className="col-md-6">
-                    <h3>Gráfico de Luz</h3>
+                    <h3>Estadísticos de Luces</h3>
                     <Line data={{
                         labels: chartData.labels,
                         datasets: [
                             {
                                 label: 'Luz',
                                 data: chartData.datasets[0].data,
-                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderColor: 'rgba(255, 204, 0, 1)', // Línea amarilla
                                 fill: false,
+                                borderWidth: 3,
                             }
                         ]
                     }} />
                 </div>
-                <div className="col-md-6">
-                    <h3>Gráfico Estado LED</h3>
-                    <Line data={{
-                        labels: chartData.labels,
-                        datasets: [
-                            {
-                                label: 'Estado LED',
-                                data: chartData.datasets[1].data,
-                                borderColor: 'rgba(153, 102, 255, 1)',
-                                fill: false,
-                            }
-                        ]
-                    }} />
+                <div className="col-md-5">
+                    <h3>Estado del LUCES</h3>
+                    {/* Recuadro con icono y transiciones */}
+                    <div 
+                        className={`led-status-box ${ledStatus === 'encendido' ? 'bg-warning' : 'bg-secondary'} p-3 rounded d-flex align-items-center justify-content-center shadow-lg`}
+                        style={{ transition: 'background-color 0.5s, transform 0.3s' }}
+                    >
+                        <FaLightbulb size={25} color="white" />
+                        <span className="ml-3 text-white">{ledStatus}</span>
+                    </div>
+                    {/* Muestra un mensaje adicional cuando el LED esté encendido */}
+                    {ledStatus === 'encendido' && (
+                        <div className="alert alert-danger mt-3" style={{ transition: 'opacity 0.5s' }}>
+                            ¡El LED está ENCENDIDO!
+                        </div>
+                    )}
                 </div>
             </div>
 
             <div className="row">
-                <div className="col-md-6">
-                    <h2>Datos de Luz</h2>
-                    <table className="table table-bordered table-striped">
+                <div className="col-md-12">
+                    <h3 className="text-center">Datos de Luz </h3>
+                    <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Luz</th>
                                 <th>Estado del LED</th>
                             </tr>
@@ -146,7 +165,6 @@ function LuzList() {
                         <tbody>
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.id}</td>
                                     <td>{row.luz}</td>
                                     <td>{row.estado_led}</td>
                                 </tr>

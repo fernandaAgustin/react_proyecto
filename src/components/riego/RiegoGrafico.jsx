@@ -1,7 +1,7 @@
-// RiegoGrafico.jsx
 import React from 'react';
 import { Line, Bar } from 'react-chartjs-2'; // Importamos el gráfico de barras también
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Box, Typography, Paper } from '@mui/material';
 
 ChartJS.register(
     CategoryScale,
@@ -25,6 +25,7 @@ const RiegoGrafico = ({ riegos }) => {
                 borderColor: 'rgb(35, 81, 16)',
                 backgroundColor: 'rgba(10, 23, 7, 0.2)',
                 fill: true,
+                tension: 0.4, // Hacer la línea más suave
             },
             {
                 label: 'Duración (min)',
@@ -32,12 +33,12 @@ const RiegoGrafico = ({ riegos }) => {
                 borderColor: 'rgb(11, 47, 53)',
                 backgroundColor: 'rgba(27, 24, 46, 0.16)',
                 fill: true,
+                tension: 0.4, // Hacer la línea más suave
             },
         ],
     };
 
     // Preparamos los datos para el gráfico de barras (por válvula)
-    // Creamos un objeto que cuente la cantidad total de agua por cada válvula
     const dataBar = {
         labels: [...new Set(riegos.map(riego => riego.valvula_id))], // IDs únicos de válvulas
         datasets: [
@@ -56,17 +57,72 @@ const RiegoGrafico = ({ riegos }) => {
     };
 
     return (
-        <div>
-            <h3>Gráfico de Riegos (Líneas y Barras)</h3>
-            <div>
-                <h4>Gráfico de Líneas</h4>
-                <Line data={dataLine} />
-            </div>
-            <div>
-                <h4>Gráfico de Barras (por Válvula)</h4>
-                <Bar data={dataBar} />
-            </div>
-        </div>
+        <Box sx={{ padding: 3, }}>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+            </Typography>
+            
+            {/* Contenedor responsivo con flexbox */}
+            <Box sx={{ 
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', // Ajusta las columnas automáticamente
+                gap: 16, // Aumentamos la separación entre los gráficos
+                justifyItems: 'center', // Centra los gráficos
+            }}>
+                {/* Gráfico de Líneas */}
+                <Paper elevation={3} sx={{ padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', backgroundColor: 'transparent' }}>
+                    <Typography variant="h6" sx={{ marginBottom: 2, color: '#333' }}>
+                        Cantidad de Agua y Duración
+                    </Typography>
+                    <Line data={dataLine} options={{
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Evolución de Riego',
+                                font: {
+                                    size: 18,
+                                },
+                            },
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14,
+                                    },
+                                },
+                            },
+                        },
+                    }} />
+                </Paper>
+
+                {/* Gráfico de Barras */}
+                <Paper elevation={3} sx={{ padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', backgroundColor: 'transparent' }}>
+                    <Typography variant="h6" sx={{ marginBottom: 2, color: '#333' }}>
+                    Cantidad de Agua por Válvula
+                    </Typography>
+                    <Bar data={dataBar} options={{
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Total de Agua por Válvula',
+                                font: {
+                                    size: 18,
+                                },
+                            },
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14,
+                                    },
+                                },
+                            },
+                        },
+                    }} />
+                </Paper>
+            </Box>
+        </Box>
     );
 };
 

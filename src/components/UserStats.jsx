@@ -37,27 +37,40 @@ const UserStats = ({ usuarios }) => {
     }));
 
     // Colores personalizados
-    const COLORS = ['#00E4FF', '#36A2EB', '#FF00FF'];
+    const COLORS = ['#00E4FF', '#36A2EB', '#FF00FF', '#FF6347', '#32CD32'];
 
     return (
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '10px', color: '#fff', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-            <div style={{ width: '45%', marginBottom: '20px' }}>
-                <h2>Distribución por Rol</h2>
-                <ResponsiveContainer width="100%" height={200}>
+        <div
+            style={{
+                backgroundColor: 'transparent',
+                padding: '30px',
+                borderRadius: '15px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+                gap: '20px',
+                color:'white',
+            }}
+        >
+            {/* Gráfico de barras: Distribución por Rol */}
+            <div style={{ flex: '1 1 45%', minWidth: '300px', marginBottom: '20px' }}>
+                <h2>Roles</h2>
+                <ResponsiveContainer width="100%" height={250}>
                     <BarChart data={roleDataArray}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" stroke="#fff" />
-                        <YAxis stroke="#fff" />
+                        <XAxis dataKey="name" stroke="#333" />
+                        <YAxis stroke="#333" />
                         <Tooltip formatter={(value) => `${value} usuarios`} />
                         <Legend iconType="circle" />
                         <Bar dataKey="value" fill="#00E4FF" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
-            
-            <div style={{ width: '45%', marginBottom: '20px' }}>
-                <h2>Distribución por Sexo</h2>
-                <ResponsiveContainer width="100%" height={200}>
+
+            {/* Gráfico de pastel: Distribución por Sexo */}
+            <div style={{ flex: '1 1 45%', minWidth: '300px', marginBottom: '20px' }}>
+                <h2>GÉNERO</h2>
+                <ResponsiveContainer width="100%" height={250}>
                     <PieChart>
                         <Pie
                             data={sexDataArray}
