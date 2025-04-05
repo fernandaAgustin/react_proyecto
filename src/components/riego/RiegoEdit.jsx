@@ -17,7 +17,7 @@ const RiegoEdit = () => {
 
     const obtenerRiego = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/riegos/${id}`);
+            const response = await axios.get(`https://18.191.201.190/api/riegos/${id}`);
             const riego = response.data;
             // Convertir fecha al formato YYYY-MM-DD
             const fechaFormateada = riego.fecha_riego.split('T')[0];
@@ -41,7 +41,7 @@ const RiegoEdit = () => {
         };
 
         try {
-            await axios.put(`http://localhost:3000/api/riegos/${id}`, datosActualizados);
+            await axios.put(`https://18.191.201.190/api/riegos/${id}`, datosActualizados);
             setSuccessMessage('Riego actualizado con éxito');
             setTimeout(() => navigate('/riego'), 2000);
         } catch (error) {

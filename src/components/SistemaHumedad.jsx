@@ -45,7 +45,7 @@ function SistemaHumedad() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/humSistema');
+            const response = await fetch('https://18.191.201.190/api/humSistema');
             const newData = await response.json();
             setData(newData);
             updateChartData(newData);

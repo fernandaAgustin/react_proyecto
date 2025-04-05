@@ -31,7 +31,7 @@ const RiegoList = () => {
 
     const obtenerRiegos = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/riegos');
+            const response = await axios.get('https://18.191.201.190/api/riegos');
             setRiegos(response.data);
         } catch (error) {
             console.error('Error al obtener los riegos:', error);
@@ -40,7 +40,7 @@ const RiegoList = () => {
 
     const eliminarRiego = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/riegos/${id}`);
+            await axios.delete(`https://18.191.201.190/api/riegos/${id}`);
             obtenerRiegos();
             alert("Riego eliminado correctamente");
         } catch (error) {

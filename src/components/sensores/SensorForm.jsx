@@ -20,7 +20,7 @@ const SensorForm = () => {
         };
 
         try {
-            await axios.post('http://localhost:3000/api/sensores', nuevoSensor);
+            await axios.post('https://18.191.201.190/api/sensores', nuevoSensor);
             alert('Sensor creado con éxito');
             setNombre('');
             setTipo('');

@@ -57,7 +57,7 @@ function TemperatureList() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/temusuario');
+            const response = await fetch('https://18.191.201.190/api/temusuario');
             const newData = await response.json();
             setData(newData);
             updateChartData(newData);

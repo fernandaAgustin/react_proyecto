@@ -39,7 +39,7 @@ const SensorList = () => {
 
     const fetchSensores = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/sensores");
+            const response = await axios.get("https://18.191.201.190/api/sensores");
             setSensores(response.data);
         } catch (error) {
             console.error("Error al obtener los sensores:", error);
@@ -52,7 +52,7 @@ const SensorList = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/sensores/${id}`);
+            await axios.delete(`https://18.191.201.190/api/sensores/${id}`);
             setSensores(sensores.filter(sensor => sensor.id !== id));
             alert("Sensor eliminado correctamente");
         } catch (error) {

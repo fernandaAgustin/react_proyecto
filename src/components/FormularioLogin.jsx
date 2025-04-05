@@ -71,7 +71,7 @@ const FormularioLogin = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/api/login", formData);
+            const response = await axios.post("https://18.191.201.190/api/login", formData);
             if (response.data.success) {
                 localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
                 setFailedAttempts(0); // Reset failed attempts on successful login
@@ -94,7 +94,7 @@ const FormularioLogin = () => {
 
     const handleForgotPassword = async () => {
         try {
-            await axios.post("http://localhost:3000/api/send-reset-code", { correo: resetEmail });
+            await axios.post("https://18.191.201.190/api/send-reset-code", { correo: resetEmail });
             setShowCodeInput(true);
         } catch (error) {
             setError("Error al enviar el código de recuperación.");
@@ -105,7 +105,7 @@ const FormularioLogin = () => {
         setIsVerifying(true);
 
         try {
-            const response = await axios.post("http://localhost:3000/api/verify-reset-code", {
+            const response = await axios.post("https://18.191.201.190/api/verify-reset-code", {
                 correo: resetEmail,
                 codigo: resetCode,
             });

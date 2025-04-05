@@ -73,7 +73,7 @@ function HumedadList() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/humUsuario');
+            const response = await fetch('https://18.191.201.190/api/humUsuario');
             const newData = await response.json();
             setData(newData);
             updateChartData(newData);

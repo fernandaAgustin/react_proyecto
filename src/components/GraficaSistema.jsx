@@ -15,10 +15,10 @@ const GraficaSistema = () => {
     // Función para obtener los datos de las API
     const fetchData = async () => {
         try {
-            const temperatureResponse = await axios.get('http://localhost:3000/api/temperature');
-            const lightResponse = await axios.get('http://localhost:3000/api/light');
-            const soilHumidityResponse = await axios.get('http://localhost:3000/api/soil-humidity');
-            const waterSensorResponse = await axios.get('http://localhost:3000/api/water-sensor');
+            const temperatureResponse = await axios.get('https://18.191.201.190/api/temperature');
+            const lightResponse = await axios.get('https://18.191.201.190/api/light');
+            const soilHumidityResponse = await axios.get('https://18.191.201.190/api/soil-humidity');
+            const waterSensorResponse = await axios.get('https://18.191.201.190/api/water-sensor');
 
             setTemperatureData(prevData => [...prevData, temperatureResponse.data[0]]);
             setLightData(prevData => [...prevData, lightResponse.data[0]]);

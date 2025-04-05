@@ -34,7 +34,7 @@ const PerfilUsuario = () => {
         // Función para obtener los usuarios
         const fetchUsuarios = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/usuarios");
+                const response = await fetch("https://18.191.201.190/api/usuarios");
                 const data = await response.json();
                 setUsuarios(data);
             } catch (error) {
@@ -45,7 +45,7 @@ const PerfilUsuario = () => {
         // Función para obtener las válvulas
         const fetchValvulas = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/valvulas/");
+                const response = await fetch("https://18.191.201.190/api/valvulas/");
                 const data = await response.json();
                 setValvulas(data);
             } catch (error) {
@@ -56,7 +56,7 @@ const PerfilUsuario = () => {
         // Función para obtener riegos
         const fetchRiegos = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/riegos');
+                const response = await axios.get('https://18.191.201.190/api/riegos');
                 const data = await response.data;
                 setRiegos(data);
             } catch (error) {
@@ -67,7 +67,7 @@ const PerfilUsuario = () => {
         // Función para obtener los sensores
         const fetchSensores = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/sensores");
+                const response = await fetch("https://18.191.201.190/api/sensores");
                 const data = await response.json();
                 setSensores(data);
             } catch (error) {
@@ -146,7 +146,7 @@ const PerfilUsuario = () => {
                     <Col xs={12} md={6}>
                         <div className="bg-dark bg-opacity-50 p-4 rounded shadow">
                             <img
-                                src={`http://localhost:3000/uploads/${usuario.foto}`}
+                                src={`https://18.191.201.190/uploads/${usuario.foto}`}
                                 alt={usuario.nombre}
                                 style={{ width: 100, height: 100, borderRadius: '50%', objectFit: 'cover' }}
                                 className="mb-3"
@@ -229,7 +229,7 @@ const PerfilUsuario = () => {
                         {/* Contenido del Dashboard */}
                         <Container className="mt-5 pt-3" >
                             <img
-                                src={`http://localhost:3000/uploads/${usuario.foto}`}
+                                src={`https://18.191.201.190/uploads/${usuario.foto}`}
                                 alt={usuario.nombre}
                                 style={{ width: 120, height: 120, borderRadius: '50%', marginBottom: '20px' }}
                             />
@@ -327,7 +327,7 @@ const PerfilUsuario = () => {
                             <Row className="align-items-center">
                                 <Col md={4} className="text-center mb-3 mb-md-0">
                                     <img
-                                        src={`http://localhost:3000/uploads/${usuario.foto}`}
+                                        src={`https://18.191.201.190/uploads/${usuario.foto}`}
                                         alt={usuario.nombre}
                                         style={{ width: 120, height: 120, borderRadius: '50%', objectFit: 'cover' }}
                                     />

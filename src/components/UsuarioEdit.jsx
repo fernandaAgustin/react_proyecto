@@ -24,7 +24,7 @@ const UsuarioEdit = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`http://localhost:3000/api/usuarios/${id}`)
+            .get(`https://18.191.201.190/api/usuarios/${id}`)
             .then((response) => {
                 const userData = response.data;
 
@@ -87,7 +87,7 @@ const UsuarioEdit = () => {
 
         setLoading(true);
         try {
-            const response = await axios.put(`http://localhost:3000/api/usuarios/${id}`, formDataToSend, {
+            const response = await axios.put(`https://18.191.201.190/api/usuarios/${id}`, formDataToSend, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             setSuccessMessage(response.data.message);
