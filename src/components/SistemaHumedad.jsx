@@ -45,7 +45,7 @@ function SistemaHumedad() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('https://18.191.201.190/api/humSistema');
+            const response = await fetch('http://localhost:3000/api/humSistema');
             const newData = await response.json();
             setData(newData);
             updateChartData(newData);
@@ -144,6 +144,14 @@ function SistemaHumedad() {
     };
 
     return (
+        <div className="App" style={{ 
+            backgroundImage: 'url(https://i.pinimg.com/736x/01/7f/7c/017f7c711c5945e3217b2af2b5f84bfb.jpg)', 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            minHeight: '100vh',
+            padding: '20px',
+            color: 'white' 
+        }}>
         <div className="App container mt-4">
             <h1 className="text-center mb-4">CONTROL DE SUELO</h1>
 
@@ -190,21 +198,21 @@ function SistemaHumedad() {
                     <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <th>Humedad Suelo 1</th>
-                                <th>Humedad Suelo 2</th>
-                                <th>Distancia 1</th>
-                                <th>Estado Bomba 1</th>
-                                <th>Estado Bomba 2</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Suelo 1</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Suelo 2</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Distancia 1</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado Bomba 1</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado Bomba 2</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.humedad_suelo1}</td>
-                                    <td>{row.humedad_suelo2}</td>
-                                    <td>{row.distancia1}</td>
-                                    <td>{row.estado_bomba1}</td>
-                                    <td>{row.estado_bomba2}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.humedad_suelo1}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.humedad_suelo2}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.distancia1}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba1}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba2}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -220,10 +228,16 @@ function SistemaHumedad() {
                             page={currentPage}
                             onChange={handlePageChange}
                             color="primary"
+                            sx={{
+                                "& .MuiPaginationItem-root": {
+                                    color: "white", // Cambia el color de las letras a blanco
+                                }
+                            }}
                         />
                     </Stack>
                 </div>
             )}
+        </div>
         </div>
     );
 }

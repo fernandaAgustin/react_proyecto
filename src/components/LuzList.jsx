@@ -6,7 +6,6 @@ import { Pagination } from 'react-bootstrap'; // Paginación de Bootstrap
 import { FaLightbulb } from 'react-icons/fa'; // Icono de luz de react-icons
 import { useNavigate } from 'react-router-dom';
 
-
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -50,7 +49,7 @@ function LuzList() {
     // Obtener los datos de la API
     const fetchData = async () => {
         try {
-            const response = await fetch('https://18.191.201.190/api/luzUsuario');
+            const response = await fetch('http://localhost:3000/api/luzUsuario');
             const newData = await response.json();
             setData(newData); // Guardar los datos recibidos
             updateChartData(newData); // Actualizar los datos para los gráficos
@@ -82,7 +81,7 @@ function LuzList() {
     // Verificar el estado del LED y mostrar alerta si está encendido
     const checkLedStatus = (data) => {
         const ledData = data.map(row => row.estado_led);
-        const ledOn = ledData.some(status => status === 'Encendido');
+        const ledOn = ledData.some(status => status === 'encendido');
         
         if (ledOn) {
             setLedStatus('encendido');
@@ -107,7 +106,14 @@ function LuzList() {
     const pageCount = Math.ceil(data.length / itemsPerPage);
 
     return (
-        <div className="App">
+        <div className="App" style={{ 
+            backgroundImage: 'url(https://i.pinimg.com/736x/01/7f/7c/017f7c711c5945e3217b2af2b5f84bfb.jpg)', 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            minHeight: '100vh',
+            padding: '20px',
+            color: 'white' 
+        }}>
             <h1 className="text-center mb-4">Gráficas de Luz</h1>
             <div className="d-flex justify-content-between mb-4" style={{ marginBottom: '35px' }}>
                 <button className="btn btn-outline-secondary" onClick={() => navigate('/perfil')}>
@@ -116,9 +122,9 @@ function LuzList() {
                 <button className="btn btn-outline-info" onClick={() => navigate('/tablaluz')}>
                     <i className="fas fa-history me-2"></i> Historial
                 </button>
-                </div>
+            </div>
             <div className="row mb-4">
-                <div className="col-md-6">
+                <div className="col-md-6" style={{ backgroundColor: 'rgba(71, 66, 66, 0.21)' , color:'white' }}>
                     <h3>Estadísticos de Luces</h3>
                     <Line data={{
                         labels: chartData.labels,
@@ -154,19 +160,19 @@ function LuzList() {
 
             <div className="row">
                 <div className="col-md-12">
-                    <h3 className="text-center">Datos de Luz </h3>
+                    <h3 className="text-center" style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Datos de Luz </h3>
                     <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <th>Luz</th>
-                                <th>Estado del LED</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Luz</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado del LED</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.luz}</td>
-                                    <td>{row.estado_led}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.luz}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_led}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -45,7 +45,7 @@ const Sidebar = ({ usuario, handleLogout }) => {
             <Box sx={{ overflow: 'auto', color: '#fff', p: 2 }}>
                 <List>
                     <ListItem sx={{ justifyContent: 'center' }}>
-                        <Avatar src={`https://18.191.201.190/uploads/${usuario.foto}`} alt={usuario.nombre} sx={{ width: 80, height: 80 }} />
+                        <Avatar src={`http://localhost:3000/uploads/${usuario.foto}`} alt={usuario.nombre} sx={{ width: 80, height: 80 }} />
                     </ListItem>
                     <ListItem sx={{ justifyContent: 'center' }}>
                         <Typography variant="h6" sx={{ color: '#fff' }}>{usuario.nombre}</Typography>

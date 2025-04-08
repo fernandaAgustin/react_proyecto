@@ -24,7 +24,7 @@ const ValvulaForm = () => {
         };
 
         try {
-            await axios.post('https://18.191.201.190/api/valvulas', nuevaValvula);
+            await axios.post('http://localhost:3000/api/valvulas', nuevaValvula);
             setSuccessMessage('Válvula creada con éxito');
             setTimeout(() => navigate('/valvula'), 2000);
         } catch (error) {

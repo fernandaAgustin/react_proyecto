@@ -126,7 +126,7 @@ const PagPrincipal = () => {
                     <Navbar.Collapse id="navbarNav">
                         <Nav className="me-auto">
                             <Nav.Link href="#"><FaHome /> Inicio</Nav.Link>
-                            <Nav.Link href="#"><FaCogs /> Sistema</Nav.Link>
+                            <Nav.Link href="/sesion"><FaCogs /> Sistema</Nav.Link>
                             <Nav.Link href="https://iris050709.github.io/SEMAICF/"><FaInfoCircle /> Sobre nosotros</Nav.Link>
                             <Nav.Link href="/sesion"><FaSignInAlt /> Iniciar sesión</Nav.Link>
                         </Nav>
@@ -191,7 +191,7 @@ const PagPrincipal = () => {
                                 <Card.Text>
                                     Descubre cómo nuestro sistema de riego SIMAICF puede transformar tu jardín, optimizando recursos hidricos.
                                 </Card.Text>
-                                <Button variant="success" className="btn-card">Ver detalles</Button>
+                                <Button variant="success" className="btn-card" href="/proyecto">Ver detalles</Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -203,7 +203,7 @@ const PagPrincipal = () => {
                                 <Card.Text>
                                     Conoce nuestra historia, misión y visión. Comprometidos con ofrecer un servicio responsable y sostenible.
                                 </Card.Text>
-                                <Button variant="success" className="btn-card">Ver historial</Button>
+                                <Button variant="success" className="btn-card" href="https://iris050709.github.io/SEMAICF/">Ver historial</Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -215,7 +215,7 @@ const PagPrincipal = () => {
                                 <Card.Text>
                                     Nos aseguramos que tu sistema de riego funcione de manera óptima desde el primer día.
                                 </Card.Text>
-                                <Button variant="success" className="btn-card">Contactanos</Button>
+                                <Button variant="success" className="btn-card" href="/instalacion">Contactanos</Button>
                             </Card.Body>
                         </Card>
                     </Col>

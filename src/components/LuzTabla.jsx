@@ -63,7 +63,7 @@ function LuzTabla() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('https://18.191.201.190/api/luzSistema');
+            const response = await fetch('http://localhost:3000/api/luzSistema');
             const newData = await response.json();
             setData(newData);
         } catch (error) {
@@ -132,6 +132,14 @@ function LuzTabla() {
     };
 
     return (
+        <div className="App" style={{ 
+            backgroundImage: 'url(https://i.pinimg.com/736x/01/7f/7c/017f7c711c5945e3217b2af2b5f84bfb.jpg)', 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            minHeight: '100vh',
+            padding: '20px',
+            color: 'white' 
+        }}>
         <div className="App">
             <div className="d-flex justify-content-between mb-4">
                 {/* Botón de Salir con ícono */}
@@ -196,15 +204,15 @@ function LuzTabla() {
                     <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <th>Luz</th>
-                                <th>Estado del LED</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Luz</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado del LED</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.luz}</td>
-                                    <td>{row.estado_led.toLowerCase()}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.luz}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_led.toLowerCase()}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -220,8 +228,14 @@ function LuzTabla() {
                     color="primary"
                     siblingCount={1}
                     boundaryCount={1}
+                    sx={{
+                        "& .MuiPaginationItem-root": {
+                            color: "white", // Cambia el color de las letras a blanco
+                        }
+                    }}
                 />
             </div>
+        </div>
         </div>
     );
 }

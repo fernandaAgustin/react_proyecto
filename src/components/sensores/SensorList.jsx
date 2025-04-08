@@ -52,7 +52,7 @@ const SensorList = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://18.191.201.190/api/sensores/${id}`);
+            await axios.delete(`http://localhost:3000/api/sensores/${id}`);
             setSensores(sensores.filter(sensor => sensor.id !== id));
             alert("Sensor eliminado correctamente");
         } catch (error) {
@@ -138,7 +138,10 @@ const SensorList = () => {
                     mt: 8,
                     maxHeight: 'calc(100vh - 64px)',
                     overflowY: 'auto',
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)'
+                    backgroundImage: 'url("https://i.pinimg.com/736x/2d/36/85/2d3685a4ecd4912b675aad67d09930c6.jpg")',
+                    backgroundSize: 'cover',  // Asegura que la imagen cubra toda el área
+                    backgroundPosition: 'center',  // Centra la imagen en el contenedor
+                    backgroundRepeat: 'no-repeat',  // Previene que la imagen se repita
                 }}
             >
                 <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>Lista de Sensores</Typography>
@@ -258,11 +261,11 @@ const SensorList = () => {
                         <TableBody>
                             {currentSensores.map((sensor) => (
                                 <TableRow key={sensor.id}>
-                                    <TableCell sx={{ color: 'black' }}>{sensor.id}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{sensor.nombre}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{sensor.tipo}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{sensor.ubicacion}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{new Date(sensor.fecha_instalacion).toLocaleDateString()}</TableCell>
+                                    <TableCell sx={{ color: '#fff' }}>{sensor.id}</TableCell>
+                                    <TableCell sx={{ color: '#fff' }}>{sensor.nombre}</TableCell>
+                                    <TableCell sx={{ color: '#fff' }}>{sensor.tipo}</TableCell>
+                                    <TableCell sx={{ color: '#fff' }}>{sensor.ubicacion}</TableCell>
+                                    <TableCell sx={{ color: '#fff' }}>{new Date(sensor.fecha_instalacion).toLocaleDateString()}</TableCell>
                                     <TableCell>
                                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                             <IconButton onClick={() => navigate(`/editSensores/${sensor.id}`)}>

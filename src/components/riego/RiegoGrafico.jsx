@@ -1,125 +1,163 @@
 import React from 'react';
-import { Line, Bar } from 'react-chartjs-2'; // Importamos el gráfico de barras también
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Box, Typography, Paper } from '@mui/material';
+import { Line, Bar } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Box, Typography, Paper, useMediaQuery, useTheme } from '@mui/material';
 
 ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
-    BarElement, // Registramos el BarElement para el gráfico de barras
+    BarElement,
     Title,
     Tooltip,
     Legend
 );
 
 const RiegoGrafico = ({ riegos }) => {
-    // Preparamos los datos para el gráfico de líneas (cantidad de agua y duración)
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const dataLine = {
-        labels: riegos.map(riego => new Date(riego.fecha_riego).toLocaleDateString()), // Las fechas en el eje X
+        labels: riegos.map(riego => new Date(riego.fecha_riego).toLocaleDateString()),
         datasets: [
             {
-                label: 'Cantidad de Agua (L)',
-                data: riegos.map(riego => riego.cantidad_agua), // Datos de la cantidad de agua
-                borderColor: 'rgb(35, 81, 16)',
-                backgroundColor: 'rgba(10, 23, 7, 0.2)',
+                label: 'Agua (L)',
+                data: riegos.map(riego => riego.cantidad_agua),
+                borderColor: '#4CAF50',
+                backgroundColor: 'rgba(76, 175, 80, 0.1)',
                 fill: true,
-                tension: 0.4, // Hacer la línea más suave
+                tension: 0.4,
             },
             {
                 label: 'Duración (min)',
-                data: riegos.map(riego => riego.duracion), // Datos de la duración
-                borderColor: 'rgb(11, 47, 53)',
-                backgroundColor: 'rgba(27, 24, 46, 0.16)',
+                data: riegos.map(riego => riego.duracion),
+                borderColor: '#2196F3',
+                backgroundColor: 'rgba(33, 150, 243, 0.1)',
                 fill: true,
-                tension: 0.4, // Hacer la línea más suave
+                tension: 0.4,
             },
         ],
     };
 
-    // Preparamos los datos para el gráfico de barras (por válvula)
+    const valvulasUnicas = [...new Set(riegos.map(r => r.valvula_id))];
     const dataBar = {
-        labels: [...new Set(riegos.map(riego => riego.valvula_id))], // IDs únicos de válvulas
+        labels: valvulasUnicas,
         datasets: [
             {
-                label: 'Cantidad Total de Agua por Válvula (L)',
-                data: [...new Set(riegos.map(riego => riego.valvula_id))].map(valvulaId =>
-                    riegos
-                        .filter(riego => riego.valvula_id === valvulaId) // Filtramos los riegos por ID de válvula
-                        .reduce((acc, curr) => acc + curr.cantidad_agua, 0) // Sumamos la cantidad de agua
+                label: 'Total Agua por Válvula (L)',
+                data: valvulasUnicas.map(id =>
+                    riegos.filter(r => r.valvula_id === id).reduce((acc, cur) => acc + cur.cantidad_agua, 0)
                 ),
-                backgroundColor: 'rgba(53, 86, 108, 0.77)',
-                borderColor: 'rgb(4, 7, 9)',
+                backgroundColor: 'rgba(129, 199, 132, 0.7)',
+                borderColor: '#388E3C',
                 borderWidth: 1,
             },
         ],
     };
 
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false, // ✅ Esto permite que las gráficas se adapten
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    color: '#ddd',
+                    font: { size: 13 },
+                },
+            },
+            title: { display: false },
+        },
+        scales: {
+            x: {
+                ticks: { color: '#aaa' },
+                grid: { color: 'rgba(255,255,255,0.05)' },
+            },
+            y: {
+                ticks: { color: '#aaa' },
+                grid: { color: 'rgba(255,255,255,0.05)' },
+            },
+        },
+    };
+
     return (
-        <Box sx={{ padding: 3, }}>
-            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold' }}>
-            </Typography>
-            
-            {/* Contenedor responsivo con flexbox */}
-            <Box sx={{ 
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', // Ajusta las columnas automáticamente
-                gap: 16, // Aumentamos la separación entre los gráficos
-                justifyItems: 'center', // Centra los gráficos
-            }}>
-                {/* Gráfico de Líneas */}
-                <Paper elevation={3} sx={{ padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', backgroundColor: 'transparent' }}>
-                    <Typography variant="h6" sx={{ marginBottom: 2, color: '#333' }}>
-                        Cantidad de Agua y Duración
-                    </Typography>
-                    <Line data={dataLine} options={{
-                        responsive: true,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Evolución de Riego',
-                                font: {
-                                    size: 18,
-                                },
-                            },
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    font: {
-                                        size: 14,
-                                    },
-                                },
-                            },
+        <Box sx={{ px: 2, py: 4 }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: isMobile ? 'column' : 'row',
+                    gap: 4,
+                    justifyContent: 'center',
+                    alignItems: 'stretch',
+                    flexWrap: 'wrap',
+                }}
+            >
+                {/* Evolución del Riego */}
+                <Paper
+                    sx={{
+                        flex: 1,
+                        minWidth: 300,
+                        maxWidth: '100%',
+                        p: 3,
+                        borderRadius: 5,
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
+                        height: 350, // altura fija para la gráfica
+                        display: 'flex',
+                        flexDirection: 'column',
+                        '&:hover': {
+                            transform: 'translateY(-5px)',
+                            boxShadow: '0 12px 24px rgba(0, 0, 0, 0.15)',
                         },
-                    }} />
+                    }}
+                >
+                    <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 500 }}>
+                        Evolución del Riego
+                    </Typography>
+                    <Box sx={{ flex: 1 }}>
+                        <Line data={dataLine} options={chartOptions} />
+                    </Box>
                 </Paper>
 
-                {/* Gráfico de Barras */}
-                <Paper elevation={3} sx={{ padding: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', backgroundColor: 'transparent' }}>
-                    <Typography variant="h6" sx={{ marginBottom: 2, color: '#333' }}>
-                    Cantidad de Agua por Válvula
-                    </Typography>
-                    <Bar data={dataBar} options={{
-                        responsive: true,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Total de Agua por Válvula',
-                                font: {
-                                    size: 18,
-                                },
-                            },
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    font: {
-                                        size: 14,
-                                    },
-                                },
-                            },
+                {/* Agua por válvula */}
+                <Paper
+                    sx={{
+                        flex: 1,
+                        minWidth: 300,
+                        maxWidth: '100%',
+                        p: 3,
+                        borderRadius: 5,
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
+                        height: 350,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        '&:hover': {
+                            transform: 'translateY(-5px)',
+                            boxShadow: '0 12px 24px rgba(0, 0, 0, 0.15)',
                         },
-                    }} />
+                    }}
+                >
+                    <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 500 }}>
+                        Agua Total por Válvula
+                    </Typography>
+                    <Box sx={{ flex: 1 }}>
+                        <Bar data={dataBar} options={chartOptions} />
+                    </Box>
                 </Paper>
             </Box>
         </Box>

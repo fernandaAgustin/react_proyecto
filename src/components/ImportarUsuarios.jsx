@@ -21,7 +21,7 @@ const ImportarUsuarios = () => {
 
     const handleImport = async () => {
         try {
-            await axios.post('https://18.191.201.190/api/usuarios/importar', usuarios);
+            await axios.post('http://localhost:3000/api/usuarios/importar', usuarios);
             alert('Usuarios importados con éxito');
         } catch (error) {
             console.error('Error al importar usuarios:', error);

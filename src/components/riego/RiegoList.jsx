@@ -31,7 +31,7 @@ const RiegoList = () => {
 
     const obtenerRiegos = async () => {
         try {
-            const response = await axios.get('https://18.191.201.190/api/riegos');
+            const response = await axios.get('http://localhost:3000/api/riegos');
             setRiegos(response.data);
         } catch (error) {
             console.error('Error al obtener los riegos:', error);
@@ -40,7 +40,7 @@ const RiegoList = () => {
 
     const eliminarRiego = async (id) => {
         try {
-            await axios.delete(`https://18.191.201.190/api/riegos/${id}`);
+            await axios.delete(`http://localhost:3000/api/riegos/${id}`);
             obtenerRiegos();
             alert("Riego eliminado correctamente");
         } catch (error) {
@@ -141,7 +141,10 @@ const RiegoList = () => {
                     mt: 8,
                     maxHeight: 'calc(100vh - 64px)',
                     overflowY: 'auto',
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)'
+                    backgroundImage: 'url("https://i.pinimg.com/736x/2d/36/85/2d3685a4ecd4912b675aad67d09930c6.jpg")',
+                    backgroundSize: 'cover',  // Asegura que la imagen cubra toda el área
+                    backgroundPosition: 'center',  // Centra la imagen en el contenedor
+                    backgroundRepeat: 'no-repeat',  // Previene que la imagen se repita
                 }}
             >
                 <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>Lista de Riegos</Typography>
@@ -263,11 +266,11 @@ const RiegoList = () => {
                         <TableBody>
                             {currentRiegos.map((riego) => (
                                 <TableRow key={riego.id}>
-                                    <TableCell sx={{ color: 'black' }}>{riego.id}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{riego.valvula_id}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{riego.cantidad_agua}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{riego.duracion}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{new Date(riego.fecha_riego).toLocaleDateString()}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{riego.id}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{riego.valvula_id}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{riego.cantidad_agua}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{riego.duracion}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{new Date(riego.fecha_riego).toLocaleDateString()}</TableCell>
                                     <TableCell>
                                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                             <IconButton color="primary" onClick={() => redirigirEdicion(riego.id)}>

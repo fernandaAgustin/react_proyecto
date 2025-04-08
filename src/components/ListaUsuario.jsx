@@ -32,7 +32,7 @@ const ListaUsuario = () => {
     }, [navigate]);
 
     useEffect(() => {
-        axios.get("https://18.191.201.190/api/usuarios/")
+        axios.get("http://localhost:3000/api/usuarios/")
             .then(response => setUsuarios(response.data))
             .catch(error => console.error("Error al obtener usuarios:", error));
     }, []);
@@ -43,7 +43,7 @@ const ListaUsuario = () => {
     };
 
     const handleDelete = (id) => {
-        axios.delete(`https://18.191.201.190/api/usuarios/${id}`)
+        axios.delete(`http://localhost:3000/api/usuarios/${id}`)
             .then(() => {
                 setUsuarios(usuarios.filter(usuario => usuario.id !== id));
                 alert("Usuario eliminado correctamente");
@@ -156,7 +156,10 @@ const ListaUsuario = () => {
                     mt: 8,
                     maxHeight: 'calc(100vh - 64px)',
                     overflowY: 'auto',
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)'
+                    backgroundImage: 'url("https://i.pinimg.com/736x/2d/36/85/2d3685a4ecd4912b675aad67d09930c6.jpg")',
+                    backgroundSize: 'cover',  // Asegura que la imagen cubra toda el área
+                    backgroundPosition: 'center',  // Centra la imagen en el contenedor
+                    backgroundRepeat: 'no-repeat',  // Previene que la imagen se repita
                 }}
             >
                 <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>Lista de Usuarios</Typography>
@@ -173,18 +176,23 @@ const ListaUsuario = () => {
                             width: '300px',
                             borderRadius: '10px',
                             '& .MuiInputBase-root': {
-                                color: 'grey',
+                                color: 'white',  // Asegura que el texto ingresado sea blanco
                             },
                             '& .MuiOutlinedInput-notchedOutline': {
-                                backgroundColor: 'rgba(0, 0, 0, 0.5)'
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Color de fondo del borde
                             },
                             '& .MuiInputLabel-root': {
-                                color: '#B0BEC5',
+                                color: 'white',  // Color de la etiqueta
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#1ABC9C',
+                                borderColor: 'green',  // Cambia el borde a verde cuando el campo está en hover
+                                borderRadius: '1px',
                             },
+                            '& .MuiInputBase-input': {
+                                color: 'white',  // Asegura que el texto ingresado sea blanco, en caso de que no se haya aplicado correctamente
+                            }
                         }}
+                        
                     />
 
                     <TextField
@@ -197,24 +205,27 @@ const ListaUsuario = () => {
                             backgroundColor: 'rgba(0, 0, 0, 0.5)',
                             width: '300px',
                             borderRadius: '10px',
+                            color: 'white',
                             '& .MuiInputBase-root': {
-                                color: 'grey',
+                                color: 'white',
                             },
                             '& .MuiOutlinedInput-notchedOutline': {
-                                backgroundColor: 'rgba(0, 0, 0, 0.5)'
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                color: 'white',
                             },
                             '& .MuiInputLabel-root': {
-                                color: '#B0BEC5',
+                                color: 'white',
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#1ABC9C',
+                                borderColor: 'green',
+                                borderRadius:'1px',
                             },
                         }}
                     />
                 </Box>
 
                 <UploadExcel
-                    onUploadSuccess={() => axios.get("https://18.191.201.190/api/usuarios/").then(response => setUsuarios(response.data))}
+                    onUploadSuccess={() => axios.get("http://localhost:3000/api/usuarios/").then(response => setUsuarios(response.data))}
                     sx={{
                         mt: 2,
                         display: 'flex',
@@ -233,6 +244,16 @@ const ListaUsuario = () => {
                 >
                     <CloudUpload sx={{ mr: 1 }} /> Subir Excel
                 </UploadExcel>
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<CloudDownload />}
+                    onClick={handleExportToExcel}
+                    sx={{ mb: 2 }}
+                >
+                    Exportar a Excel
+                </Button>
 
                 {/* Agregar las gráficas */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4, mt: 4 }}>
@@ -295,12 +316,12 @@ const ListaUsuario = () => {
                         <TableBody>
                             {currentUsuarios.map(usuario => (
                                 <TableRow key={usuario.id} sx={{ backgroundColor: 'transparent' }}>
-                                    <TableCell sx={{ color: 'black', backgroundColor: 'transparent' }}>{usuario.id}</TableCell>
-                                    <TableCell sx={{ color: 'black', backgroundColor: 'transparent' }}>{usuario.nombre}</TableCell>
-                                    <TableCell sx={{ color: 'black', backgroundColor: 'transparent' }}>{usuario.correo}</TableCell>
-                                    <TableCell sx={{ color: 'black', backgroundColor: 'transparent' }}>{usuario.rol}</TableCell>
-                                    <TableCell sx={{ color: 'black', backgroundColor: 'transparent' }}>{new Date(usuario.fecha_nacimiento).toLocaleDateString()}</TableCell>
-                                    <TableCell sx={{ color: 'black', backgroundColor: 'transparent' }}>{usuario.sexo}</TableCell>
+                                    <TableCell sx={{ color: 'white', backgroundColor: 'transparent' }}>{usuario.id}</TableCell>
+                                    <TableCell sx={{ color: 'white', backgroundColor: 'transparent' }}>{usuario.nombre}</TableCell>
+                                    <TableCell sx={{ color: 'white', backgroundColor: 'transparent' }}>{usuario.correo}</TableCell>
+                                    <TableCell sx={{ color: 'white', backgroundColor: 'transparent' }}>{usuario.rol}</TableCell>
+                                    <TableCell sx={{ color: 'white', backgroundColor: 'transparent' }}>{new Date(usuario.fecha_nacimiento).toLocaleDateString()}</TableCell>
+                                    <TableCell sx={{ color: 'white', backgroundColor: 'transparent' }}>{usuario.sexo}</TableCell>
                                     <TableCell sx={{ backgroundColor: 'transparent' }}>
                                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                             <IconButton color="primary" component={Link} to={`/editUsuarios/${usuario.id}`}>
@@ -318,7 +339,7 @@ const ListaUsuario = () => {
                 </TableContainer>
 
                 {/* Paginación */}
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 , color:'white'}}>
                     <Typography variant="body1" sx={{ marginRight: 2 }}>
                         Página {currentPage} de {totalPages}
                     </Typography>
@@ -351,15 +372,6 @@ const ListaUsuario = () => {
                     }}
                 >
                     Nuevo Usuario
-                </Button>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<CloudDownload />}
-                    onClick={handleExportToExcel}
-                    sx={{ mb: 2 }}
-                >
-                    Exportar a Excel
                 </Button>
             </Box>
         </Box>

@@ -51,13 +51,6 @@ function HumedadList() {
         ]
     });
 
-    const [pumpStatus, setPumpStatus] = useState({
-        pump1: 'apagada',
-        pump2: 'apagada',
-    });
-
-    const [showAlertTemp1, setShowAlertTemp1] = useState(false); // For pump 1 alert
-    const [showAlertTemp2, setShowAlertTemp2] = useState(false); // For pump 2 alert
 
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
@@ -73,12 +66,11 @@ function HumedadList() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('https://18.191.201.190/api/humUsuario');
+            const response = await fetch('http://localhost:3000/api/humUsuario');
             const newData = await response.json();
             setData(newData);
             updateChartData(newData);
             updateDistanceData(newData);
-            checkPumpStatus(newData);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
@@ -120,25 +112,12 @@ function HumedadList() {
                 {
                     label: 'Nivel de Agua',
                     data: distanceDataArr,
-                    borderColor: 'rgb(98, 200, 137)',
+                    borderColor: 'rgb(61, 112, 81)',
                     fill: false,
                     borderWidth: 4,
                 }
             ]
         });
-    };
-
-    const checkPumpStatus = (data) => {
-        const lastData = data[data.length - 1];
-        const newPumpStatus = {
-            pump1: lastData.estado_bomba1 === 'encendido' ? 'encendido' : 'apagado',
-            pump2: lastData.estado_bomba2 === 'encendido' ? 'encendido' : 'apagado',
-        };
-        setPumpStatus(newPumpStatus);
-
-        // Handle alert visibility
-        setShowAlertTemp1(lastData.estado_bomba1 === 'encendido');
-        setShowAlertTemp2(lastData.estado_bomba2 === 'encendido');
     };
 
     const handlePageChange = (pageNumber) => {
@@ -151,6 +130,7 @@ function HumedadList() {
     const pageCount = Math.ceil(data.length / itemsPerPage);
 
     return (
+
         <div className="App">
             <h1 className="text-center mb-4">CONTROL DE SUELO</h1>
             <div className="row mb-4">
@@ -170,33 +150,9 @@ function HumedadList() {
                     <Line data={distanceData} />
                 </div>
             </div>
-
-            {showAlertTemp1 && (
-                <center>
-                <div className="alert alert-info mt-3" style={{ transition: 'opacity 0.5s' }}>
-                    ¡BOMBA ENCENDIDA!
-                </div>
-                </center>
-            )}
-            {showAlertTemp2 && (
-                <center>
-                <div className="alert alert-info mt-3" style={{ transition: 'opacity 0.5s' }}>
-                    ¡BOMBA DE EMERGENCIA ENCENDIDA!
-                </div>
-                </center>
-            )}
             <div className="row mb-4">
             <center>
-                <div className="col-md-5">
-                    <div className={`bomba-status-box ${pumpStatus.pump1 === 'encendido' ? 'bg-primary' : 'bg-secondary'} p-3 rounded d-flex align-items-center justify-content-center shadow-lg`}>
-                        <FaGasPump size={15} color="white" /> {/* Updated icon */}
-                        <span className="ml-3 text-white">{`BOMBA: ${pumpStatus.pump1}`}</span>
-                    </div>
-                    <div className={`bomba-status-box ${pumpStatus.pump2 === 'encendido' ? 'bg-primary' : 'bg-secondary'} p-3 rounded d-flex align-items-center justify-content-center shadow-lg mt-3`}>
-                        <FaGasPump size={15} color="white" /> {/* Updated icon */}
-                        <span className="ml-3 text-white">{`BOMBA DE EMERGENCIA: ${pumpStatus.pump2}`}</span>
-                    </div>
-                </div>
+                
                 </center>
             </div>
             <div className="row">
@@ -205,21 +161,21 @@ function HumedadList() {
                     <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <th>Humedad Suelo 1</th>
-                                <th>Humedad Suelo 2</th>
-                                <th>Distancia 1</th>
-                                <th>Estado Bomba 1</th>
-                                <th>Estado Bomba 2</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Suelo 1</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Suelo 2</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Distancia 1</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado Bomba 1</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado Bomba 2</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.humedad_suelo1}</td>
-                                    <td>{row.humedad_suelo2}</td>
-                                    <td>{row.distancia1}</td>
-                                    <td>{row.estado_bomba1}</td>
-                                    <td>{row.estado_bomba2}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.humedad_suelo1}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.humedad_suelo2}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.distancia1}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba1}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba2}</td>
                                 </tr>
                             ))}
                         </tbody>

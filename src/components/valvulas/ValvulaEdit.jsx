@@ -17,7 +17,7 @@ const ValvulaEdit = () => {
 
     const obtenerValvula = async () => {
         try {
-            const response = await axios.get(`https://18.191.201.190/api/valvulas/${id}`);
+            const response = await axios.get(`http://localhost:3000/api/valvulas/${id}`);
             const valvula = response.data;
             setNombre(valvula.nombre);
             setUbicacion(valvula.ubicacion);
@@ -42,7 +42,7 @@ const ValvulaEdit = () => {
         };
 
         try {
-            await axios.put(`https://18.191.201.190/api/valvulas/${id}`, datosActualizados);
+            await axios.put(`http://localhost:3000/api/valvulas/${id}`, datosActualizados);
             setSuccessMessage('Válvula actualizada con éxito');
             setTimeout(() => navigate('/valvula'), 2000);
         } catch (error) {

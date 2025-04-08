@@ -32,6 +32,9 @@ import TemperaturaTable from "./components/TemperaturaTable";
 import LuzTabla from "./components/LuzTabla";
 import SistemaHumedad from "./components/SistemaHumedad";
 import AguaSistema from "./components/AguaSistema";
+import ProyectoInvernadero from "./components/ProyectoInvernadero";
+import ServicioInstalacion from "./components/ServicioInstalacion";
+import HumedadPage from "./pages/HumedadPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -66,6 +69,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/tablatem" element={<TemperaturaTable />} />
       <Route path="/tablaluz" element={<LuzTabla />} />
       <Route path="/shumedad" element={<SistemaHumedad />} />
+      <Route path="/proyecto" element={<ProyectoInvernadero />} />
+      <Route path="/instalacion" element={<ServicioInstalacion/>} />
+      <Route path="/hume" element={<HumedadPage/>} />
 
 
 

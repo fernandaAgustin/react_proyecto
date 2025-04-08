@@ -59,7 +59,7 @@ const ValvulaList = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://18.191.201.190/api/valvulas/${id}`);
+            await axios.delete(`http://localhost:3000/api/valvulas/${id}`);
             setValvulas(valvulas.filter(valvula => valvula.id !== id));
             alert("Válvula eliminada correctamente");
         } catch (error) {
@@ -135,7 +135,10 @@ const ValvulaList = () => {
                     mt: 8,
                     maxHeight: 'calc(100vh - 64px)',
                     overflowY: 'auto',
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)'
+                    backgroundImage: 'url("https://i.pinimg.com/736x/2d/36/85/2d3685a4ecd4912b675aad67d09930c6.jpg")',
+                    backgroundSize: 'cover',  // Asegura que la imagen cubra toda el área
+                    backgroundPosition: 'center',  // Centra la imagen en el contenedor
+                    backgroundRepeat: 'no-repeat',  // Previene que la imagen se repita
                 }}
             >
                 <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>Lista de Valvulas</Typography>
@@ -246,11 +249,11 @@ const ValvulaList = () => {
                         <TableBody>
                             {currentValvulas.map((valvula) => (
                                 <TableRow key={valvula.id}>
-                                    <TableCell sx={{ color: 'black' }}>{valvula.id}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{valvula.nombre}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{valvula.ubicacion}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{valvula.estado}</TableCell>
-                                    <TableCell sx={{ color: 'black' }}>{new Date(valvula.fecha_instalacion).toLocaleDateString()}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{valvula.id}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{valvula.nombre}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{valvula.ubicacion}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{valvula.estado}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{new Date(valvula.fecha_instalacion).toLocaleDateString()}</TableCell>
                                     <TableCell>
                                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                             <IconButton color="primary" onClick={() => redirigirEdicion(valvula.id)}>

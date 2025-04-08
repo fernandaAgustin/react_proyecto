@@ -55,7 +55,7 @@ function TemperaturaTable() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('https://18.191.201.190/api/temSistema');
+            const response = await fetch('http://localhost:3000/api/temSistema');
             if (!response.ok) {
                 throw new Error('No se pudo obtener los datos de la API');
             }
@@ -102,7 +102,7 @@ function TemperaturaTable() {
         const temp1 = data[data.length - 1]?.nivel_temperatura1;
         const temp2 = data[data.length - 1]?.nivel_temperatura2;
 
-        if (temp1 > 30 || temp2 > 30) {
+        if (temp1 > 30 || temp2 > 25) {
             if (fanStatus !== 'Encendido') {
                 setFanStatus('Encendido');
                 setNotification('¡Alerta! El ventilador se ha encendido debido a la temperatura alta.');
@@ -153,7 +153,13 @@ function TemperaturaTable() {
     };
 
     return (
-        <div className="App">
+        <div className="App" style={{ 
+            backgroundImage: 'url("https://i.pinimg.com/736x/01/7f/7c/017f7c711c5945e3217b2af2b5f84bfb.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '100vh', 
+            color: 'white' // Para que el texto se vea bien sobre el fondo
+        }}>
             {/* Botón "Ir a Perfil" */}
             <Link to="/perfil" className="mx-2">
                 <button className="btn btn-transparent">
@@ -262,15 +268,15 @@ function TemperaturaTable() {
                         <table className="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Temperatura 1</th>
-                                    <th>Estado Ventilador 1</th>
+                                    <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white'}}>Temperatura 1</th>
+                                    <th style={{backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white'}}>Estado Ventilador 1</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {currentItems.map((row, index) => (
                                     <tr key={index}>
-                                        <td>{row.nivel_temperatura1}</td>
-                                        <td>{row.estado_ventilador1}</td>
+                                        <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.nivel_temperatura1}</td>
+                                        <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' ,color:'white' }}>{row.estado_ventilador1}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -284,15 +290,15 @@ function TemperaturaTable() {
                         <table className="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Temperatura 2</th>
-                                    <th>Estado Ventilador 2</th>
+                                    <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white'}}>Temperatura 2</th>
+                                    <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)', color:'white' }}>Estado Ventilador 2</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {currentItems.map((row, index) => (
                                     <tr key={index}>
-                                        <td>{row.nivel_temperatura2}</td>
-                                        <td>{row.estado_ventilador2}</td>
+                                        <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)', color:'white'}}>{row.nivel_temperatura2}</td>
+                                        <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_ventilador2}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -307,6 +313,11 @@ function TemperaturaTable() {
                 page={currentPage}
                 onChange={handlePageChange}
                 color="primary"
+                sx={{
+                    "& .MuiPaginationItem-root": {
+                        color: "white", // Cambia el color de las letras a blanco
+                    }
+                }}
             />
 
             {notification && (

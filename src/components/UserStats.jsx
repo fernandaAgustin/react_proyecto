@@ -1,99 +1,124 @@
 // src/components/UserStats.js
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import {
+    PieChart,
+    Pie,
+    Cell,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid
+} from 'recharts';
+import { Box, Typography, Paper, useMediaQuery, useTheme } from '@mui/material';
+
+// Colores personalizados
+const COLORS = ['#00E4FF', '#36A2EB', '#FF00FF', '#FF6347', '#32CD32', '#FFD700'];
 
 const UserStats = ({ usuarios }) => {
-    // Datos para el gráfico de pastel (Distribución por Sexo)
-    const sexData = usuarios.reduce((acc, user) => {
-        acc[user.sexo] = (acc[user.sexo] || 0) + 1;
-        return acc;
-    }, {});
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const sexDataArray = Object.keys(sexData).map((key) => ({
-        name: key,
-        value: sexData[key],
-    }));
+    if (!usuarios || usuarios.length === 0) {
+        return <Typography color="white">Cargando estadísticas...</Typography>;
+    }
 
-    // Datos para el gráfico de barras (Distribución por Rol)
-    const roleData = usuarios.reduce((acc, user) => {
-        acc[user.rol] = (acc[user.rol] || 0) + 1;
-        return acc;
-    }, {});
+    // Función para agrupar datos
+    const groupBy = (data, key) =>
+        Object.entries(data.reduce((acc, item) => {
+            acc[item[key]] = (acc[item[key]] || 0) + 1;
+            return acc;
+        }, {})).map(([name, value]) => ({ name, value }));
 
-    const roleDataArray = Object.keys(roleData).map((key) => ({
-        name: key,
-        value: roleData[key],
-    }));
-
-    // Datos para el gráfico de pastel (Distribución por Tipo de Usuario)
-    const userTypeData = usuarios.reduce((acc, user) => {
-        acc[user.tipo] = (acc[user.tipo] || 0) + 1;
-        return acc;
-    }, {});
-
-    const userTypeDataArray = Object.keys(userTypeData).map((key) => ({
-        name: key,
-        value: userTypeData[key],
-    }));
-
-    // Colores personalizados
-    const COLORS = ['#00E4FF', '#36A2EB', '#FF00FF', '#FF6347', '#32CD32'];
+    const sexData = groupBy(usuarios, "sexo");
+    const roleData = groupBy(usuarios, "rol");
 
     return (
-        <div
-            style={{
-                backgroundColor: 'transparent',
-                padding: '30px',
-                borderRadius: '15px',
+        <Box
+            sx={{
                 display: 'flex',
+                flexDirection: isSmallScreen ? 'column' : 'row',
                 flexWrap: 'wrap',
-                justifyContent: 'space-between',
-                gap: '20px',
-                color:'white',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 4,
+                padding: 2,
             }}
         >
-            {/* Gráfico de barras: Distribución por Rol */}
-            <div style={{ flex: '1 1 45%', minWidth: '300px', marginBottom: '20px' }}>
-                <h2>Roles</h2>
-                <ResponsiveContainer width="100%" height={250}>
-                    <BarChart data={roleDataArray}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" stroke="#333" />
-                        <YAxis stroke="#333" />
-                        <Tooltip formatter={(value) => `${value} usuarios`} />
-                        <Legend iconType="circle" />
-                        <Bar dataKey="value" fill="#00E4FF" />
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
+            {/* Roles - Barras */}
+            <Paper
+                elevation={6}
+                sx={{
+                    width: isSmallScreen ? '100%' : '45%',
+                    minWidth: 300,
+                    padding: 3,
+                    borderRadius: '20px',
+                    background: 'linear-gradient(to bottom right, rgba(0,228,255,0.1), rgba(54,162,235,0.1))',
+                    backdropFilter: 'blur(10px)',
+                    color: 'white',
+                }}
+            >
+                <Typography gutterBottom textAlign="center" sx={{color: "black"}}>
+                    Distribución por Rol
+                </Typography>
+                <Box sx={{ width: '100%', height: 250 }}>
+                    <ResponsiveContainer>
+                        <BarChart data={roleData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" stroke="#ccc" />
+                            <YAxis stroke="#ccc" />
+                            <Tooltip formatter={(value) => `${value} usuario(s)`} />
+                            <Legend iconType="circle" />
+                            <Bar dataKey="value" fill="#00E4FF" radius={[5, 5, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </Box>
+            </Paper>
 
-            {/* Gráfico de pastel: Distribución por Sexo */}
-            <div style={{ flex: '1 1 45%', minWidth: '300px', marginBottom: '20px' }}>
-                <h2>GÉNERO</h2>
-                <ResponsiveContainer width="100%" height={250}>
-                    <PieChart>
-                        <Pie
-                            data={sexDataArray}
-                            dataKey="value"
-                            nameKey="name"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={40}
-                            outerRadius={70}
-                            fill="#8884d8"
-                            paddingAngle={5}
-                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(2)}%`}
-                        >
-                            {sexDataArray.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip formatter={(value, name) => [`${value} (${((value / usuarios.length) * 100).toFixed(2)}%)`, name]} />
-                        <Legend iconType="circle" />
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
-        </div>
+            {/* Género - Pastel */}
+            <Paper
+                elevation={6}
+                sx={{
+                    width: isSmallScreen ? '100%' : '45%',
+                    minWidth: 300,
+                    padding: 3,
+                    borderRadius: '20px',
+                    background: 'linear-gradient(to bottom right, rgba(255,0,255,0.1), rgba(50,205,50,0.1))',
+                    backdropFilter: 'blur(10px)',
+                    color: 'white',
+                }}
+            >
+                <Typography  gutterBottom textAlign="center" sx={{color: "black"}}> 
+                    Distribución por Género
+                </Typography>
+                <Box sx={{ width: '100%', height: 250 }}>
+                    <ResponsiveContainer>
+                        <PieChart>
+                            <Pie
+                                data={sexData}
+                                dataKey="value"
+                                nameKey="name"
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={40}
+                                outerRadius={70}
+                                paddingAngle={5}
+                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
+                            >
+                                {sexData.map((entry, index) => (
+                                    <Cell key={`sex-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip formatter={(value, name) => [`${value} usuario(s)`, name]} />
+                            <Legend iconType="circle" />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </Box>
+            </Paper>
+        </Box>
     );
 };
 
