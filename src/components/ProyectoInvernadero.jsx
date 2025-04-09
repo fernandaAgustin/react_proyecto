@@ -87,7 +87,7 @@ const ProyectoInvernadero = () => {
             </Grid>
 
             <Box textAlign="center" mt={6}>
-                <GreenButton onClick={() => navigate('/perFil')}>
+                <GreenButton onClick={() => navigate('/')}>
                     ⬅ Regresar
                 </GreenButton>
             </Box>

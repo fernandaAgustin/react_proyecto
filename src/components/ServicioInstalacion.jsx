@@ -100,7 +100,7 @@ const ServicioInstalacion = () => {
             </Typography>
 
             <Box textAlign="center">
-                <BackButton onClick={() => navigate('/perfil')}>
+                <BackButton onClick={() => navigate('/')}>
                     ⬅ Regresar
                 </BackButton>
             </Box>
