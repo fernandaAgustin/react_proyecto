@@ -15,7 +15,7 @@ const SensorEdit = () => {
 
     const obtenerSensor = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/sensores/${id}`);
+            const response = await axios.get(`https://18.191.201.190/api/sensores/${id}`);
             const sensor = response.data;
             setNombre(sensor.nombre);
             setTipo(sensor.tipo);
@@ -43,7 +43,7 @@ const SensorEdit = () => {
         };
 
         try {
-            await axios.put(`http://localhost:3000/api/sensores/${id}`, datosActualizados);
+            await axios.put(`https://18.191.201.190/api/sensores/${id}`, datosActualizados);
             alert('Sensor actualizado con éxito');
             navigate('/sensores');
         } catch (error) {

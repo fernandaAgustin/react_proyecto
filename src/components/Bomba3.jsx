@@ -7,7 +7,7 @@ function Bomba3() {
 
     useEffect(() => {
         const fetchData = () => {
-            fetch('http://localhost:3000/api/humUsuario')
+            fetch('https://18.191.201.190/api/humUsuario')
                 .then(response => response.json())
                 .then(data => {
                     const lastRecord = data[0]; // Tomamos el registro más reciente

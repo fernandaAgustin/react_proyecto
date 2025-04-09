@@ -49,7 +49,7 @@ function LuzList() {
     // Obtener los datos de la API
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/luzUsuario');
+            const response = await fetch('https://18.191.201.190/api/luzUsuario');
             const newData = await response.json();
             setData(newData); // Guardar los datos recibidos
             updateChartData(newData); // Actualizar los datos para los gráficos

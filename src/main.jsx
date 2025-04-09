@@ -35,6 +35,7 @@ import AguaSistema from "./components/AguaSistema";
 import ProyectoInvernadero from "./components/ProyectoInvernadero";
 import ServicioInstalacion from "./components/ServicioInstalacion";
 import HumedadPage from "./pages/HumedadPage";
+import TemperaturePage from "./pages/TemperaturePage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -72,6 +73,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/proyecto" element={<ProyectoInvernadero />} />
       <Route path="/instalacion" element={<ServicioInstalacion/>} />
       <Route path="/hume" element={<HumedadPage/>} />
+      <Route path="/tem" element={<TemperaturePage/>} />
 
 
 

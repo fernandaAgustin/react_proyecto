@@ -3,7 +3,6 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Pagination } from 'react-bootstrap';
-import { FaGasPump } from 'react-icons/fa'; // Import the pump icon
 import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(
@@ -161,11 +160,13 @@ function HumedadList() {
                     <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
-                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Suelo 1</th>
-                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Suelo 2</th>
-                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Distancia 1</th>
-                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado Bomba 1</th>
-                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Estado Bomba 2</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Zona A</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Humedad Zona B</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Nivel de Agua</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Bomba A</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Bomba Respaldo A</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Bomba B</th>
+                                <th style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>Bomba Respaldo B</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -176,6 +177,8 @@ function HumedadList() {
                                     <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.distancia1}</td>
                                     <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba1}</td>
                                     <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba2}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba3}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{row.estado_bomba4}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -35,7 +35,7 @@ const Sidebar = ({ usuario, handleLogout }) => (
         <Box sx={{}}>
             <List>
                 <ListItem sx={{ justifyContent: 'center' }}>
-                    <Avatar src={`http://localhost:3000/uploads/${usuario.foto}`} alt={usuario.nombre} sx={{ width: 80, height: 80 }} />
+                    <Avatar src={`https://18.191.201.190/uploads/${usuario.foto}`} alt={usuario.nombre} sx={{ width: 80, height: 80 }} />
                 </ListItem>
                 <ListItem sx={{ justifyContent: 'center' }}>
                     <Typography sx={{ color: 'white', fontWeight: 'bold', }}>{usuario.nombre}</Typography>
@@ -129,7 +129,7 @@ const UsuarioList = () => {
     }, [navigate]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/usuarios/") 
+        axios.get("https://18.191.201.190/api/usuarios/") 
             .then(response => setUsuarios(response.data))
             .catch(error => console.error("Error al obtener usuarios:", error));
     }, []);
@@ -140,7 +140,7 @@ const UsuarioList = () => {
     };
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:3000/api/usuarios/${id}`)
+        axios.delete(`https://18.191.201.190/api/usuarios/${id}`)
             .then(() => {
                 setUsuarios(usuarios.filter(usuario => usuario.id !== id));
                 alert("Usuario eliminado correctamente");
@@ -295,7 +295,7 @@ const UsuarioList = () => {
                 </Box>
 
                 <UploadExcel
-                    onUploadSuccess={() => axios.get("http://localhost:3000/api/usuarios/").then(response => setUsuarios(response.data))}
+                    onUploadSuccess={() => axios.get("https://18.191.201.190/api/usuarios/").then(response => setUsuarios(response.data))}
                     sx={{
                         mt: 2,
                         display: 'flex',

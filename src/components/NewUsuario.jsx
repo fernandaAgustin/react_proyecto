@@ -54,7 +54,7 @@ const NewUsuario = () => {
         Object.entries(formData).forEach(([key, value]) => formDataToSend.append(key, value));
 
         try {
-            const response = await axios.post("http://localhost:3000/api/usuarios", formDataToSend, {
+            const response = await axios.post("https://18.191.201.190/api/usuarios", formDataToSend, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             setSuccessMessage(response.data.message);

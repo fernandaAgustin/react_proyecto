@@ -41,7 +41,7 @@ const RiegoEdit = () => {
         };
 
         try {
-            await axios.put(`http://localhost:3000/api/riegos/${id}`, datosActualizados);
+            await axios.put(`https://18.191.201.190/api/riegos/${id}`, datosActualizados);
             setSuccessMessage('Riego actualizado con éxito');
             setTimeout(() => navigate('/riego'), 2000);
         } catch (error) {

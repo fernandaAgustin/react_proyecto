@@ -59,7 +59,7 @@ const ValvulaList = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/valvulas/${id}`);
+            await axios.delete(`https://18.191.201.190/api/valvulas/${id}`);
             setValvulas(valvulas.filter(valvula => valvula.id !== id));
             alert("Válvula eliminada correctamente");
         } catch (error) {

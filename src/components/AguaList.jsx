@@ -28,22 +28,43 @@ function AguaList() {
     // Obtener los datos de la API
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/agUsuario');
+            const response = await fetch('https://18.191.201.190/api/agUsuario');
             const newData = await response.json();
             setData(newData); // Guardar los datos recibidos
+            checkWaterAlert(newData); // Verificar si hay alerta de agua
+            checkServoAlert(newData); // Verificar si hay alerta del servo
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
     };
-
-    // Función para convertir los valores de agua a su representación
-    const getAguaLabel = (agua) => agua === 1 ? 'HAY AGUA' : 'NO HAY AGUA';
 
     // Función para convertir los valores de posición del servo a su representación
     const getServoLabel = (posicion) => {
         if (posicion === 0) return 'CERRADO';
         if (posicion === 90) return 'ABIERTO';
         return 'Posición desconocida';
+    };
+
+    // Verificar el estado del agua y mostrar alerta si es 1
+    const checkWaterAlert = (data) => {
+        const waterData = data.map(row => row.agua_detectada);
+        const waterDetected = waterData.some(status => status === 1);
+        
+        if (waterDetected) {
+            setNotification('¡Alerta! Agua detectada.');
+        } else {
+            setNotification('');
+        }
+    };
+
+    // Verificar el estado del servo y mostrar alerta si está abierto
+    const checkServoAlert = (data) => {
+        const servoData = data.map(row => row.posicion_servo);
+        const servoOpen = servoData.some(status => status === 90);
+        
+        if (servoOpen) {
+            setNotification(prevNotification => prevNotification + ' ¡Alerta! Se ha detectado lluvia, El contenedor está abierto.');
+        }
     };
 
     // Función para cambiar la página de la tabla
@@ -63,7 +84,7 @@ function AguaList() {
     const lastRow = data[data.length - 1];
 
     // Datos para el gráfico de agua
-    const aguaData = data.map(row => getAguaLabel(row.agua_detectada));
+    const aguaData = data.map(row => row.agua_detectada); // Mantener los valores tal como están
     const aguaLabels = data.map((_, index) => `Registro ${index + 1}`);
 
     // Datos para el gráfico de posición del servo
@@ -76,7 +97,7 @@ function AguaList() {
         datasets: [
             {
                 label: 'Estado de Agua Detectada',
-                data: aguaData.map(status => status === 'HAY AGUA' ? 1 : 0), // 1 para HAY AGUA, 0 para NO HAY AGUA
+                data: aguaData, // Usar los valores tal cual
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
@@ -119,21 +140,6 @@ function AguaList() {
             </div>
             <h1 className="text-center mb-4">Estado de Agua y Servo</h1>
 
-            <div className="row mb-4">
-                <div className="col-md-6">
-                    <h3>Último Estado de Agua Detectada</h3>
-                    <div className="alert alert-info text-center" style={{ backgroundColor: 'rgba(0, 123, 255, 0.6)' }}>
-                        {lastRow ? getAguaLabel(lastRow.agua_detectada) : 'Cargando...'}
-                    </div>
-                </div>
-                <div className="col-md-6">
-                    <h3>Último Estado de Posición del Servo</h3>
-                    <div className="alert alert-info text-center" style={{ backgroundColor: 'rgba(0, 123, 255, 0.6)' }}>
-                        {lastRow ? getServoLabel(lastRow.posicion_servo) : 'Cargando...'}
-                    </div>
-                </div>
-            </div>
-
             {/* Gráficos */}
             <div className="row mb-4">
                 <div className="col-md-6">
@@ -159,8 +165,12 @@ function AguaList() {
                         <tbody>
                             {currentItems.map((row, index) => (
                                 <tr key={index}>
-                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{getAguaLabel(row.agua_detectada)}</td>
-                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>{getServoLabel(row.posicion_servo)}</td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>
+                                        {row.agua_detectada} {/* Mostrar valor de 0 o 1 directamente */}
+                                    </td>
+                                    <td style={{ backgroundColor: 'rgba(102, 100, 100, 0.45)' , color:'white' }}>
+                                        {getServoLabel(row.posicion_servo)}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

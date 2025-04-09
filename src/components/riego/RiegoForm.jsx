@@ -23,7 +23,7 @@ const RiegoForm = () => {
         };
 
         try {
-            await axios.post('http://localhost:3000/api/riegos', nuevoRiego);
+            await axios.post('https://18.191.201.190/api/riegos', nuevoRiego);
             setSuccessMessage('Riego creado con éxito');
             setTimeout(() => navigate('/riego'), 2000);
             setValvulaId('');

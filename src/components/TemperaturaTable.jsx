@@ -55,7 +55,7 @@ function TemperaturaTable() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/temSistema');
+            const response = await fetch('https://18.191.201.190/api/temSistema');
             if (!response.ok) {
                 throw new Error('No se pudo obtener los datos de la API');
             }

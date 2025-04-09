@@ -44,9 +44,6 @@ function TemperatureList() {
         temp1: 'apagado',
         temp2: 'apagado',
     });
-    const [showAlertTemp1, setShowAlertTemp1] = useState(false); 
-    const [showAlertTemp2, setShowAlertTemp2] = useState(false); 
-
     useEffect(() => {
         fetchData();
         const interval = setInterval(() => {
@@ -57,7 +54,7 @@ function TemperatureList() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/temusuario');
+            const response = await fetch('https://18.191.201.190/api/temusuario');
             const newData = await response.json();
             setData(newData);
             updateChartData(newData);
@@ -91,19 +88,6 @@ function TemperatureList() {
             ]
         });
     };
-
-    const checkFanStatus = (data) => {
-        const lastData = data[data.length - 1];
-        const newFanStatus = {
-            temp1: lastData.estado_ventilador1 === 'encendido' ? 'encendido' : 'apagado',
-            temp2: lastData.estado_ventilador2 === 'encendido' ? 'encendido' : 'apagado',
-        };
-        setFanStatus(newFanStatus);
-
-        setShowAlertTemp1(newFanStatus.temp1 === 'encendido');
-        setShowAlertTemp2(newFanStatus.temp2 === 'encendido');
-    };
-
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -114,14 +98,7 @@ function TemperatureList() {
     const pageCount = Math.ceil(data.length / itemsPerPage);
 
     return (
-        <div className="App" style={{
-            backgroundImage: 'url("https://i.pinimg.com/736x/01/7f/7c/017f7c711c5945e3217b2af2b5f84bfb.jpg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            minHeight: '100vh',
-            color: 'white',
-            paddingBottom: '20px',
-        }}>
+        <div>
             <h1 className="text-center mb-4" style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', color:'black' }}>Temperatura</h1>
             <div className="row mb-4">
                 <div className="d-flex justify-content-between mb-4" style={{ marginBottom: '35px' }}>
@@ -139,27 +116,8 @@ function TemperatureList() {
                         datasets: chartData.datasets
                     }} />
                 </div>
-                <div className="col-md-5">
-                    <div className={`ventilador-status-box ${fanStatus.temp1 === 'encendido' ? 'bg-danger' : 'bg-secondary'} p-3 rounded d-flex align-items-center justify-content-center shadow-lg`} style={{ transition: 'background-color 0.5s, transform 0.3s' }}>
-                        <FaFan size={25} color="white" />
-                        <span className="ml-3">{`VENTILACIÓN A: ${fanStatus.temp1}`}</span>
-                    </div>
-                    <div className={`ventilador-status-box ${fanStatus.temp2 === 'encendido' ? 'bg-danger' : 'bg-secondary'} p-3 rounded d-flex align-items-center justify-content-center shadow-lg mt-3`} style={{ transition: 'background-color 0.5s, transform 0.3s' }}>
-                        <FaFan size={25} color="white" />
-                        <span className="ml-3">{`VENTILACIÓN B: ${fanStatus.temp2}`}</span>
-                    </div>
-                </div>
+            
             </div>
-            {showAlertTemp1 && (
-                <div className="alert alert-danger mt-3" style={{ transition: 'opacity 0.5s' }}>
-                    ¡VENTILACIÓN ZONA 'A' ENCENDIDO!
-                </div>
-            )}
-            {showAlertTemp2 && (
-                <div className="alert alert-danger mt-3" style={{ transition: 'opacity 0.5s' }}>
-                    ¡VENTILACIÓN ZONA 'B' ENCENDIDO!
-                </div>
-            )}
 <div className="row">
     <div className="col-md-12">
         <h3 className="text-center">Datos</h3>

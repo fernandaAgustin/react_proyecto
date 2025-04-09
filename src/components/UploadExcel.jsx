@@ -20,7 +20,7 @@ const UploadExcel = ({ onUploadSuccess }) => {
         formData.append("file", file);
     
         try {
-            const response = await fetch("http://localhost:3000/api/excel-excel", {  // <--- Ruta corregida
+            const response = await fetch("https://18.191.201.190/api/excel-excel", {  // <--- Ruta corregida
                 method: "POST",
                 body: formData,
             });
