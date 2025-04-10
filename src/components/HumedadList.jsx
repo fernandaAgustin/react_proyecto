@@ -157,6 +157,7 @@ function HumedadList() {
             <div className="row">
                 <div className="col-md-12">
                     <h3 className="text-center">Tabla de Datos</h3>
+                    <div className="table-responsive">
                     <table className="table table-bordered table-striped text-center">
                         <thead>
                             <tr>
@@ -183,6 +184,7 @@ function HumedadList() {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
 
