@@ -62,7 +62,7 @@ const ProyectoInvernadero = () => {
                 }, {
                     title: '📱 App IoT',
                     image: 'https://i.pinimg.com/736x/a4/e4/70/a4e4702967cbacd4e21ff3be8496146d.jpg',
-                    text: 'Gestiona el sistema desde tu smartphone: selecciona el cultivo, revisa datos y predice la cosecha.'
+                    text: 'Gestiona el sistema desde tu smartphone: Revisa datos.'
                 }].map((item, i) => (
                     <Grid item xs={12} md={6} key={i}>
                         <GreenCard>
