@@ -169,12 +169,12 @@ const FormularioLogin = () => {
                             top: 16,
                             left: 16,
                             zIndex: 10,
-                            color: "white",
+                            color: "black",
                         }}
                         onClick={() => navigate("/")}
                     >
                         <ArrowBack />
-                        SALIR
+                        CANCELAR
                     </Button>
 
                     <Typography variant="h5" sx={{ mb: 3 }}>
@@ -215,12 +215,12 @@ const FormularioLogin = () => {
                             </Button>
                             <Grid container sx={{ mt: 2 }}>
                                 <Grid item xs>
-                                    <Button onClick={() => setShowReset(true)} color="primary" fullWidth>
+                                    <Button onClick={() => setShowReset(true)} color="primary" fullWidth style={{ color: 'black' }}>
                                         ¿Olvidaste tu contraseña?
                                     </Button>
                                 </Grid>
                                 <Grid item>
-                                    <Button onClick={() => navigate("/register")} color="secondary" fullWidth>
+                                    <Button onClick={() => navigate("/register")} color="secondary" fullWidth style={{ color: 'white' }}>
                                         ¿No tienes una cuenta? Regístrate aquí
                                     </Button>
                                 </Grid>
