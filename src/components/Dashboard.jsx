@@ -5,6 +5,7 @@ import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, Legend as RechartsLege
 import { Box, Typography } from '@mui/material';
 
 // Registra los componentes necesarios para las gráficas de Chart.js
+// CAMBIO
 ChartJS.register(
     ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement
 );
