@@ -142,12 +142,22 @@ function AguaList() {
 
             {/* Gráficos */}
             <div className="row mb-4">
-                <div className="col-md-6">
-                    <h2>Gráfico de Estado de Agua</h2>
+                <div className="col-md-6"
+                style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.56)', // Fondo blanco con transparencia
+                    border: '1px solid rgba(163, 159, 159, 0.5)', // Borde transparente
+                    opacity: 0.9, // Opacidad de la tabla para mayor transparencia
+                }}>
+                    <h2 style={{color:'black'}}>Gráfico de Estado de Agua</h2>
                     <Bar data={aguaChartData} options={{ responsive: true }} />
                 </div>
-                <div className="col-md-6">
-                    <h2>Gráfico de Posición del Servo</h2>
+                <div className="col-md-6"
+                style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.56)', // Fondo blanco con transparencia
+                    border: '1px solid rgba(163, 159, 159, 0.5)', // Borde transparente
+                    opacity: 0.9, // Opacidad de la tabla para mayor transparencia
+                }}>
+                    <h2 style={{color:'black'}}>Gráfico de Posición del Servo</h2>
                     <Line data={servoChartData} options={{ responsive: true }} />
                 </div>
             </div>

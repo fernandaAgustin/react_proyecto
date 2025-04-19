@@ -1,90 +1,80 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container, Carousel, Button, Row, Col, Card } from "react-bootstrap";
-import { FaHome, FaCogs, FaInfoCircle, FaSignInAlt, FaFacebook, FaTwitter, FaInstagram, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa'; // Importar iconos de React Icons
+import { FaHome, FaCogs, FaInfoCircle, FaSignInAlt, FaFacebook, FaTwitter, FaInstagram, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaGithub } from 'react-icons/fa';
 
-// Importar imágenes y video desde src/img
-import imagen1 from "../img/i1.webp";
-const video1 = "https://media.istockphoto.com/id/696885278/video/two-gardeners-analyzing-flower-growth-in-the-greenhouse.mp4?s=mp4-640x640-is&k=20&c=4o32hN1SmVeaaEhq-e_iEEmGZAgj01rwMS3MjiRIl3M=";
-const video2 = "https://media.istockphoto.com/id/1460856874/video/close-up-of-modern-photovoltaic-solar-battery-rows-of-sustainable-energy-solar-panels.mp4?s=mp4-640x640-is&k=20&c=DCpz6y708Iihtg7WFx1ZWnzh29mUoHvcnJiZu2ZXCfk="; // Importar el video
+const imagen1 = "https://i.pinimg.com/736x/23/76/c4/2376c4cb820a87243588cbcc67056a2f.jpg";
+const video1 = "https://videocdn.cdnpk.net/videos/cccbb392-77c0-4759-a5ae-6800e085cc34/horizontal/previews/clear/large.mp4?token=exp=1745093128~hmac=a00f4ffb790ef5bd3b3958805cb4789ddc459f46e80c199e2d02445fbb913e0f";
+const video2 = "https://videocdn.cdnpk.net/videos/af8f5d9c-73f3-473e-b16a-ee6a11c1fc2e/horizontal/previews/clear/large.mp4?token=exp=1745091764~hmac=77a403e951ce753b5e424f6af148ad4513153253e184780fd7e1e6f7b1fa0090";
 
 const PagPrincipal = () => {
     return (
         <div>
-            {/* CSS inline */}
             <style>
                 {`
-                    /* Efecto al pasar el cursor por encima del Card */
                     .card-hover:hover {
-                        transform: scale(1.05); /* Aumenta ligeramente el tamaño */
-                        transition: transform 0.3s ease-in-out; /* Suaviza la transición */
-                        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Agrega una sombra sutil */
+                        transform: scale(1.05);
+                        transition: transform 0.3s ease-in-out;
+                        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
                     }
 
-                    /* Estilo para los iconos dentro de los Cards */
                     .icon-card {
-                        font-size: 30px; /* Tamaño del icono */
-                        color: rgba(0, 128, 0, 0.6); /* Verde transparente */
-                        margin-bottom: 10px; /* Espacio entre el icono y el texto */
+                        font-size: 30px;
+                        color: rgba(0, 128, 0, 0.6);
+                        margin-bottom: 10px;
                     }
 
-                    /* Efecto de hover sobre el icono */
                     .icon-card:hover {
-                        color: rgba(0, 128, 0, 1); /* Verde sólido cuando el cursor está encima */
+                        color: rgba(0, 128, 0, 1);
                         transition: color 0.3s ease;
                     }
 
-                    /* Personalización del botón */
                     .btn-card {
-                        background-color: #28a745; /* Verde Bootstrap */
-                        border: none; /* Sin borde */
+                        background-color: #28a745;
+                        border: none;
                         padding: 10px 20px;
                         font-size: 16px;
-                        transition: background-color 0.3s ease; /* Transición suave en el color */
+                        transition: background-color 0.3s ease;
                     }
 
-                    /* Efecto de hover sobre el botón */
                     .btn-card:hover {
-                        background-color: #218838; /* Verde más oscuro cuando pasa el cursor */
+                        background-color: #218838;
                     }
 
-                    /* Efecto de opacidad para iconos */
                     .card-body:hover .icon-card {
-                        opacity: 1; /* Hacer el icono completamente visible cuando se pasa el cursor */
+                        opacity: 1;
                     }
 
-                    /* Efecto de hover en Navbar */
                     .navbar-nav .nav-link:hover {
-                        background-color: rgba(0, 128, 0, 0.2); /* Fondo verde transparente al pasar el cursor */
-                        border-radius: 4px; /* Borde redondeado */
+                        background-color: rgba(0, 128, 0, 0.2);
+                        border-radius: 4px;
                     }
 
-                    /* Estilos para el pie de página */
                     footer {
-                        background-color: #333; /* Gris oscuro */
+                        background-color: #333;
                         color: white;
                         padding: 30px 0;
-                        box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+                        box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
                     }
 
                     footer a {
                         text-decoration: none;
                         color: white;
-                        transition: color 0.3s ease; /* Transición de color */
+                        transition: color 0.3s ease;
                     }
 
                     footer a:hover {
-                        color: #28a745; /* Verde para iconos y enlaces al pasar el cursor */
+                        color: #28a745;
                     }
 
                     footer .social-icons a {
                         font-size: 24px;
                         margin-right: 15px;
-                        transition: transform 0.3s ease; /* Efecto de transición de los iconos sociales */
+                        transition: transform 0.3s ease;
                     }
 
                     footer .social-icons a:hover {
-                        transform: scale(1.2); /* Aumenta ligeramente el tamaño del icono al pasar el cursor */
+                        transform: scale(1.2);
                     }
 
                     footer .text-center {
@@ -92,34 +82,49 @@ const PagPrincipal = () => {
                     }
 
                     footer .footer-col {
-                        transition: transform 0.3s ease; /* Transición de transformación */
+                        transition: transform 0.3s ease;
                     }
 
                     footer .footer-col:hover {
-                        transform: translateY(-5px); /* Eleva ligeramente los textos al pasar el cursor */
+                        transform: translateY(-5px);
                     }
 
-                    /* Estilo de línea de separación */
                     .footer-line {
-                        border-bottom: 1px solid #28a745; /* Línea verde */
-                        margin: 10px 0; /* Espaciado */
-                        width: 40px; /* Ancho de la línea */
+                        border-bottom: 1px solid #28a745;
+                        margin: 10px 0;
+                        width: 40px;
                     }
 
-                    /* Estilo de iconos pequeños y su alineación */
                     .footer-icon {
                         font-size: 18px;
                         margin-right: 10px;
                     }
 
                     .footer-icon:hover {
-                        color: #28a745; /* Verde para iconos al pasar el cursor */
+                        color: #28a745;
+                    }
+
+                    .github-avatar {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        border: 2px solid #28a745;
+                        object-fit: cover;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .github-avatar:hover {
+                        transform: scale(1.1);
+                    }
+
+                    .footer-col a:hover span {
+                        color: #28a745;
+                        text-decoration: underline;
                     }
                 `}
             </style>
 
-            {/* Menú de Navegación utilizando react-bootstrap */}
-            <Navbar bg="success" variant="dark" expand="lg" >
+            <Navbar bg="success" variant="dark" expand="lg">
                 <Container fluid>
                     <Navbar.Brand href="#">SEMAICF</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarNav" />
@@ -134,16 +139,15 @@ const PagPrincipal = () => {
                 </Container>
             </Navbar>
 
-            {/* Imagenes/Videos */}
             <Carousel>
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
                         src={imagen1}
                         alt="First slide"
-                        style={{ objectFit: "cover", height: "400px" }}  // Ajustar altura y mantener proporciones
+                        style={{ objectFit: "cover", height: "400px" }}
                     />
-                    <Carousel.Caption style={{ fontFamily: "'Roboto', sans-serif" }}>
+                    <Carousel.Caption>
                         <h3 style={{ fontWeight: "700" }}>Bienvenido a SEMAICF</h3>
                         <p style={{ fontWeight: "400" }}>Gestiona y controla el riego de tus plantas de forma automática.</p>
                     </Carousel.Caption>
@@ -156,9 +160,10 @@ const PagPrincipal = () => {
                         autoPlay
                         loop
                         muted
-                        style={{ objectFit: "cover", height: "400px" }}  // Ajustar altura y mantener proporciones
+                        style={{ objectFit: "cover", height: "400px" }}
+                        title="Video sobre riego inteligente"
                     />
-                    <Carousel.Caption style={{ fontFamily: "'Roboto', sans-serif" }}>
+                    <Carousel.Caption>
                         <h3 style={{ fontWeight: "700" }}>Riego Inteligente</h3>
                         <p style={{ fontWeight: "400" }}>Transformamos el riego con tecnología inteligente, optimizando recursos y cuidando el medio ambiente.</p>
                     </Carousel.Caption>
@@ -171,16 +176,16 @@ const PagPrincipal = () => {
                         autoPlay
                         loop
                         muted
-                        style={{ objectFit: "cover", height: "400px" }}  // Ajustar altura y mantener proporciones
+                        style={{ objectFit: "cover", height: "400px" }}
+                        title="Video sobre energías limpias"
                     />
-                    <Carousel.Caption style={{ fontFamily: "'Roboto', sans-serif" }}>
+                    <Carousel.Caption>
                         <h3 style={{ fontWeight: "700" }}>Energías Limpias</h3>
                         <p style={{ fontWeight: "400" }}>Un riego eficiente y amigable con el medio ambiente, impulsado por la energía solar.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
 
-            {/* Contenedores dinámicos */}
             <Container className="my-5">
                 <Row>
                     <Col md={4}>
@@ -189,7 +194,7 @@ const PagPrincipal = () => {
                                 <FaCogs className="icon-card" />
                                 <Card.Title>Conoce Nuestro Sistema</Card.Title>
                                 <Card.Text>
-                                    Descubre cómo nuestro sistema de riego SIMAICF puede transformar tu jardín, optimizando recursos hidricos.
+                                    Descubre cómo nuestro sistema de riego SEMAICF puede transformar tu jardín, optimizando recursos hidricos.
                                 </Card.Text>
                                 <Button variant="success" className="btn-card" href="/proyecto">Ver detalles</Button>
                             </Card.Body>
@@ -222,7 +227,6 @@ const PagPrincipal = () => {
                 </Row>
             </Container>
 
-            {/* Pie de página */}
             <footer>
                 <Container>
                     <Row>
@@ -235,24 +239,45 @@ const PagPrincipal = () => {
                             </div>
                             <div className="footer-line"></div>
                         </Col>
+
                         <Col md={4} className="footer-col">
                             <h5><FaMapMarkerAlt className="footer-icon" /> Contacto:</h5>
-                            <p>Atarrasquillo, Lerma, Mexico</p>
-                            <p><FaPhoneAlt className="footer-icon" /> +52 722 5014319</p>
-                            <p><FaEnvelope className="footer-icon" /><a href="mailto:SIMAICF@gmail.com">SIMAICF@gmail.com</a></p>
+                            <p>Atarasquillo, Lerma, Mexico</p>
+                            <p><FaPhoneAlt className="footer-icon" /> +52 722 501 4319</p>
+                            <p><FaEnvelope className="footer-icon" /><a href="mailto:SEMAICF@gmail.com">SEMAICF@gmail.com</a></p>
                             <div className="footer-line"></div>
                         </Col>
+
                         <Col md={4} className="footer-col">
                             <h5><FaInfoCircle className="footer-icon" /> Desarrolladores:</h5>
-                            <p>Iris Cruz Clemente</p>
-                            <p>Fernanda Agustin Osorio</p>
-                            <p>Cesar Morales Perez</p>
+
+                            <div className="d-flex align-items-center mb-3">
+                                <a href="https://github.com/iris050709" target="_blank" rel="noopener noreferrer" className="d-flex align-items-center text-white">
+                                    <img src="https://github.com/iris050709.png" alt="Iris GitHub" className="github-avatar me-2" />
+                                    <span>Iris Cruz Clemente</span>
+                                </a>
+                            </div>
+
+                            <div className="d-flex align-items-center mb-3">
+                                <a href="https://github.com/fernandaAgustin" target="_blank" rel="noopener noreferrer" className="d-flex align-items-center text-white">
+                                    <img src="https://github.com/fernandaAgustin.png" alt="Fernanda GitHub" className="github-avatar me-2" />
+                                    <span>Fernanda Agustin Osorio</span>
+                                </a>
+                            </div>
+
+                            <div className="d-flex align-items-center mb-3">
+                                <a href="https://github.com/CesarMorales19" target="_blank" rel="noopener noreferrer" className="d-flex align-items-center text-white">
+                                    <img src="https://github.com/CesarMorales1.png" alt="Cesar GitHub" className="github-avatar me-2" />
+                                    <span>Cesar Morales Perez</span>
+                                </a>
+                            </div>
+
                             <div className="footer-line"></div>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="text-center mt-3">
-                            <p>© 2024 SIMAICF Todos los derechos reservados.</p>
+                            <p>© 2024 SEMAICF Todos los derechos reservados.</p>
                         </Col>
                     </Row>
                 </Container>

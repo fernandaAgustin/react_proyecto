@@ -124,7 +124,7 @@ function LuzList() {
                 </button>
             </div>
             <div className="row mb-4">
-                <div className="col-md-6" style={{ backgroundColor: 'rgba(71, 66, 66, 0.21)' , color:'white' }}>
+                <div className="col-md-6" style={{ backgroundColor: 'rgba(185, 180, 180, 0.54)' , color:'black' }}>
                     <h3>Estadísticos de Luces</h3>
                     <Line data={{
                         labels: chartData.labels,

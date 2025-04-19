@@ -109,7 +109,13 @@ function TemperatureList() {
                         <i className="fas fa-history me-2"></i> Historial
                     </button>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-6"
+                style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.56)', // Fondo blanco con transparencia
+                    border: '1px solid rgba(255, 255, 255, 0.5)', // Borde transparente
+                    opacity: 0.9, // Opacidad de la tabla para mayor transparencia
+                }}
+                >
                     <h3>Datos Estadísticos</h3>
                     <Line data={{
                         labels: chartData.labels,

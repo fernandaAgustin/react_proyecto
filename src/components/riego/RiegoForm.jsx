@@ -46,7 +46,7 @@ const RiegoForm = () => {
             alignItems="center"
             minHeight="100vh"
             sx={{
-                backgroundImage: "url('https://example.com/your-background-image.jpg')",
+                backgroundImage: "url('https://i.pinimg.com/736x/52/50/3c/52503cc457fc84a29c5414fc34d4ba2c.jpg')",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 padding: 1,

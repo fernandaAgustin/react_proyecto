@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { TextField, Button, Container, Typography, IconButton } from '@mui/material';
 import { ArrowBack, Person as PersonIcon, DeviceHub as DeviceHubIcon, LocationOn as LocationOnIcon } from '@mui/icons-material';
-import { Zoom } from '@mui/material';
+import { Zoom, Box} from '@mui/material';
 
 const SensorForm = () => {
     const [nombre, setNombre] = useState('');
@@ -32,6 +32,19 @@ const SensorForm = () => {
     };
 
     return (
+        <Box
+        sx={{
+            minHeight: '100vh',
+            backgroundImage: 'url("https://i.pinimg.com/736x/52/50/3c/52503cc457fc84a29c5414fc34d4ba2c.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 2,
+        }}
+    >
         <Zoom in={true} timeout={500}>
             <Container 
                 component="main" 
@@ -120,6 +133,7 @@ const SensorForm = () => {
                 </IconButton>
             </Container>
         </Zoom>
+        </Box>
     );
 };
 

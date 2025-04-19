@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Alert, Box, Typography, Zoom, InputAdornment } from "@mui/material";
 import { PersonAdd, Lock, Email, Person, CalendarToday, VisibilityOff } from "@mui/icons-material";
-import backgroundImage from "../img/ejemp.jpg";
 
 const FormularioRegistro = () => {
     const navigate = useNavigate();
@@ -72,7 +71,7 @@ const FormularioRegistro = () => {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                backgroundImage: `url(${backgroundImage})`,
+                backgroundImage: 'url("https://i.pinimg.com/736x/ac/05/33/ac0533d4126a66bec25d838c860e3dbd.jpg")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundAttachment: "fixed",

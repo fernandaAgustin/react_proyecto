@@ -169,8 +169,13 @@ function TemperaturaTable() {
             <h1 className="text-center mb-4">Gráficas de Temperatura</h1>
 
             <div className="row mb-4">
-                <div className="col-md-6">
-                    <h3>Gráfico Temperatura 1</h3>
+                <div className="col-md-6"
+                style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.56)', // Fondo blanco con transparencia
+                    border: '1px solid rgba(255, 255, 255, 0.5)', // Borde transparente
+                    opacity: 0.9, // Opacidad de la tabla para mayor transparencia
+                }}>
+                    <h3 style={{ color:'black' }}>Gráfico Temperatura 1</h3>
                     <Line data={{
                         labels: chartData.labels,
                         datasets: [
@@ -183,8 +188,13 @@ function TemperaturaTable() {
                         ]
                     }} />
                 </div>
-                <div className="col-md-6">
-                    <h3>Gráfico Temperatura 2</h3>
+                <div className="col-md-6"
+                style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.56)', // Fondo blanco con transparencia
+                    border: '1px solid rgba(163, 159, 159, 0.5)', // Borde transparente
+                    opacity: 0.9, // Opacidad de la tabla para mayor transparencia
+                }}>
+                    <h3 style={{ color:'black' }}>Gráfico Temperatura 2</h3>
                     <Line data={{
                         labels: chartData.labels,
                         datasets: [

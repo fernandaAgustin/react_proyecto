@@ -151,7 +151,7 @@ function LuzTabla() {
 
             <h1 className="text-center mb-4">Gráficas de Luz</h1>
 
-            <div className="row mb-4">
+            <div className="row mb-4" style={{ backgroundColor: 'rgba(185, 180, 180, 0.54)' , color:'black' }}>
                 <div className="col-md-12 d-flex justify-content-center">
                     <div style={{ width: '80%' }}>
                         <h3>Gráfico de Luz y Estado del LED</h3>

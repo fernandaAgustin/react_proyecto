@@ -100,13 +100,23 @@ const UsuarioEdit = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+        <Box sx={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundImage: "url('https://i.pinimg.com/736x/52/50/3c/52503cc457fc84a29c5414fc34d4ba2c.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
+            padding: 1,
+        }}>
             <Fade in={true} timeout={1000}>
                 <Box
                     component="form"
                     onSubmit={handleSubmit}
                     sx={{
-                        backgroundColor: 'white',
+                        backgroundColor: "rgba(255, 255, 255, 0.56)",
                         padding: 4,
                         borderRadius: 2,
                         boxShadow: 3,

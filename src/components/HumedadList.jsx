@@ -142,10 +142,10 @@ function HumedadList() {
                 </button>
                 </div>
                 <center><h3>Datos Estadísticos</h3></center>
-                <div className="col-md-6">
+                <div className="col-md-6" style={{ backgroundColor: 'rgba(185, 180, 180, 0.74)' , color:'black' }}>
                     <Line data={chartData} />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-6" style={{ backgroundColor: 'rgba(185, 180, 180, 0.74)' , color:'black' }}>
                     <Line data={distanceData} />
                 </div>
             </div>

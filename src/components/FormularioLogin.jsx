@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Container, Grid, Typography, Box } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material"; // Importamos el ícono de flecha
-import backgroundImage from "../img/ejemp.jpg";
+import { TextField, Button, Container, Grid, Typography, Box} from "@mui/material";
+import { ArrowBack } from "@mui/icons-material"; 
 
 const FormularioLogin = () => {
     const navigate = useNavigate();
@@ -136,7 +135,7 @@ const FormularioLogin = () => {
                 alignItems: "center",
                 justifyContent: "center", // Centramos el contenido verticalmente
                 minHeight: "100vh",
-                backgroundImage: `url(${backgroundImage})`,
+                backgroundImage: 'url("https://i.pinimg.com/736x/ac/05/33/ac0533d4126a66bec25d838c860e3dbd.jpg")',
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
@@ -169,7 +168,7 @@ const FormularioLogin = () => {
                             top: 16,
                             left: 16,
                             zIndex: 10,
-                            color: "black",
+                            color: "white",
                         }}
                         onClick={() => navigate("/")}
                     >

@@ -128,7 +128,7 @@ function AguaSistema() {
                 <h1 className="text-center mb-4">Gráficas de Agua y Servo</h1>
 
                 <div className="row mb-4">
-                    <div className="col-md-6">
+                    <div className="col-md-6" style={{ backgroundColor: 'rgba(185, 180, 180, 0.54)' , color:'black' }}>
                         <h3>Gráfico Agua Detectada</h3>
                         <Line data={{
                             labels: chartData.labels,
@@ -142,7 +142,7 @@ function AguaSistema() {
                             ]
                         }} />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6" style={{ backgroundColor: 'rgba(185, 180, 180, 0.54)' , color:'black' }}>
                         <h3>Gráfico Posición Servo</h3>
                         <Line data={{
                             labels: chartData.labels,
