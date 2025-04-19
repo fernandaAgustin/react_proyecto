@@ -86,7 +86,7 @@ const ProyectoInvernadero = () => {
     return (
         <Box sx={{ position: 'relative' }}>
             <BackgroundVideo
-                src="https://videocdn.cdnpk.net/videos/d62a9ca9-03d2-417f-9108-2857a4641b28/horizontal/previews/clear/large.mp4?token=exp=1745099036~hmac=f9e092e825c88ca131437fd4eda80394085a10d47d12108c4d4d1cbb1715f4b2"
+                src="https://videocdn.cdnpk.net/videos/5778bc04-98ac-4707-a840-6f84eaecec71/horizontal/previews/clear/large.mp4?token=exp=1745104060~hmac=677d2e2708104bfbc22b326cca7d39f2f7bc10749fdb5a0eb38968b08d3b61dd"
                 autoPlay
                 muted
                 loop

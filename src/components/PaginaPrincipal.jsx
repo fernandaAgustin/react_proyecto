@@ -4,8 +4,8 @@ import { Navbar, Nav, Container, Carousel, Button, Row, Col, Card } from "react-
 import { FaHome, FaCogs, FaInfoCircle, FaSignInAlt, FaFacebook, FaTwitter, FaInstagram, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaGithub } from 'react-icons/fa';
 
 const imagen1 = "https://i.pinimg.com/736x/23/76/c4/2376c4cb820a87243588cbcc67056a2f.jpg";
-const video1 = "https://videocdn.cdnpk.net/videos/cccbb392-77c0-4759-a5ae-6800e085cc34/horizontal/previews/clear/large.mp4?token=exp=1745093128~hmac=a00f4ffb790ef5bd3b3958805cb4789ddc459f46e80c199e2d02445fbb913e0f";
-const video2 = "https://videocdn.cdnpk.net/videos/af8f5d9c-73f3-473e-b16a-ee6a11c1fc2e/horizontal/previews/clear/large.mp4?token=exp=1745091764~hmac=77a403e951ce753b5e424f6af148ad4513153253e184780fd7e1e6f7b1fa0090";
+const video1 = "https://videocdn.cdnpk.net/videos/cccbb392-77c0-4759-a5ae-6800e085cc34/horizontal/previews/clear/large.mp4?token=exp=1745103652~hmac=912d9acad5d46cb455f93ba1628ae9a7948bb421853abe4c3e827a361baa304d";
+const video2 = "https://videocdn.cdnpk.net/videos/af8f5d9c-73f3-473e-b16a-ee6a11c1fc2e/horizontal/previews/clear/large.mp4?token=exp=1745103925~hmac=a89ac59953101263e1e281be2703ae23f33ddfc634f8226497c328748c3fef5b";
 
 const PagPrincipal = () => {
     return (
