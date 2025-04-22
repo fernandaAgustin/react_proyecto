@@ -238,7 +238,7 @@ const PagPrincipal = () => {
                             <h5><FaMapMarkerAlt className="footer-icon" /> Contacto:</h5>
                             <p>Atarasquillo, Lerma, Mexico</p>
                             <p><FaPhoneAlt className="footer-icon" /> +52 722 501 4319</p>
-                            <p><FaEnvelope className="footer-icon" /><a href="mailto:SEMAICF@gmail.com">SEMAICF@gmail.com</a></p>
+                            <p><FaEnvelope className="footer-icon" /><a href="mailto:semaicfsol@gmail.com">semaicfsol@gmail.com</a></p>
                             <div className="footer-line"></div>
                         </Col>
 
