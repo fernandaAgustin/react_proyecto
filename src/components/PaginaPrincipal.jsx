@@ -4,8 +4,8 @@ import { Navbar, Nav, Container, Carousel, Button, Row, Col, Card } from "react-
 import { FaHome, FaCogs, FaInfoCircle, FaSignInAlt, FaFacebook, FaTwitter, FaInstagram, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaGithub } from 'react-icons/fa';
 
 const imagen1 = "https://i.pinimg.com/736x/23/76/c4/2376c4cb820a87243588cbcc67056a2f.jpg";
-const video1 = "https://videocdn.cdnpk.net/videos/cccbb392-77c0-4759-a5ae-6800e085cc34/horizontal/previews/clear/large.mp4?token=exp=1745103652~hmac=912d9acad5d46cb455f93ba1628ae9a7948bb421853abe4c3e827a361baa304d";
-const video2 = "https://videocdn.cdnpk.net/videos/af8f5d9c-73f3-473e-b16a-ee6a11c1fc2e/horizontal/previews/clear/large.mp4?token=exp=1745103925~hmac=a89ac59953101263e1e281be2703ae23f33ddfc634f8226497c328748c3fef5b";
+const video1 = "https://i.pinimg.com/736x/a7/35/a6/a735a67615d493da9332fcee6fbfec93.jpg";
+const video2 = "https://i.pinimg.com/736x/d0/5b/ba/d05bbacec1122734b03150d39756ef58.jpg";
 
 const PagPrincipal = () => {
     return (
@@ -154,14 +154,11 @@ const PagPrincipal = () => {
                 </Carousel.Item>
 
                 <Carousel.Item>
-                    <video
+                    <img
                         className="d-block w-100"
                         src={video1}
-                        autoPlay
-                        loop
-                        muted
+                        alt="First slide"
                         style={{ objectFit: "cover", height: "400px" }}
-                        title="Video sobre riego inteligente"
                     />
                     <Carousel.Caption>
                         <h3 style={{ fontWeight: "700" }}>Riego Inteligente</h3>
@@ -170,14 +167,11 @@ const PagPrincipal = () => {
                 </Carousel.Item>
 
                 <Carousel.Item>
-                    <video
+                    <img
                         className="d-block w-100"
                         src={video2}
-                        autoPlay
-                        loop
-                        muted
+                        alt="First slide"
                         style={{ objectFit: "cover", height: "400px" }}
-                        title="Video sobre energías limpias"
                     />
                     <Carousel.Caption>
                         <h3 style={{ fontWeight: "700" }}>Energías Limpias</h3>
